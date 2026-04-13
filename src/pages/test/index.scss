@@ -1,0 +1,196 @@
+// SBTI 测试页 - 多巴胺配色 + 可爱风
+// 配色：粉#FF6B9D / 黄#FFD93D / 蓝#4D96FF / 绿#6BCB77
+
+.test-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #FFF5F8 0%, #F0F8FF 100%);
+
+  .loading {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .loading-text { font-size: 32rpx; color: #FF6B9D; font-weight: 600; }
+  }
+
+  .question-scroll {
+    flex: 1;
+    padding: 24px 20px 0;
+    box-sizing: border-box;
+  }
+
+  // 题目卡片 - 可爱风
+  .question-card {
+    background: #ffffff;
+    border: 2px solid rgba(255, 107, 157, 0.15);
+    border-radius: 32px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(255, 107, 157, 0.08);
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .question-index {
+      font-size: 26rpx;
+      color: #FF6B9D;
+      font-weight: 700;
+    }
+
+    .supplement-tag {
+      font-size: 22rpx;
+      color: #FF6B9D;
+      background: #FFE5EC;
+      border: 1.5px solid rgba(255, 107, 157, 0.3);
+      padding: 4px 16px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .question-text {
+      font-size: 34rpx;
+      color: #3a3a3a;
+      line-height: 1.8;
+      word-break: break-all;
+      font-weight: 500;
+    }
+  }
+
+  // 选项 - 可爱风
+  .options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 20px;
+      background: #ffffff;
+      border: 2.5px solid rgba(77, 150, 255, 0.2);
+      border-radius: 24px;
+      transition: all 0.25s;
+      box-sizing: border-box;
+      box-shadow: 0 4px 12px rgba(77, 150, 255, 0.06);
+
+      &.selected {
+        border-color: #4D96FF;
+        background: #EEF5FF;
+
+        .option-letter {
+          background: #4D96FF;
+          color: #ffffff;
+          box-shadow: 0 4px 12px rgba(77, 150, 255, 0.3);
+        }
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+
+      .option-letter {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #E5F3FF;
+        border-radius: 50%;
+        font-size: 28rpx;
+        font-weight: 700;
+        color: #4D96FF;
+        margin-right: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        transition: all 0.25s;
+      }
+
+      .option-text {
+        flex: 1;
+        font-size: 32rpx;
+        color: #3a3a3a;
+        line-height: 1.7;
+      }
+    }
+  }
+
+  // 进度条 - 可爱风
+  .progress-wrapper {
+    padding: 16px 20px 10px;
+    background: #ffffff;
+    border-top: 2px solid rgba(255, 107, 157, 0.1);
+
+    .progress-bar {
+      height: 6px;
+      background: #FFE5EC;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF6B9D, #FF8E8E);
+      border-radius: 3px;
+      transition: width 0.4s;
+    }
+
+    .progress-text {
+      text-align: center;
+      font-size: 24rpx;
+      color: #FF6B9D;
+      font-weight: 600;
+    }
+  }
+
+  // 导航按钮 - 可爱风
+  .navigation {
+    display: flex;
+    gap: 16px;
+    padding: 16px 20px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    background: #ffffff;
+    border-top: 2px solid rgba(255, 107, 157, 0.1);
+
+    .nav-btn {
+      flex: 1;
+      height: 96px;
+      line-height: 96px;
+      font-size: 34rpx;
+      font-weight: 700;
+      border-radius: 48px;
+      border: none;
+      transition: all 0.2s;
+      &::after { border: none; }
+
+      &.prev-btn {
+        background: #FFE5EC;
+        color: #FF6B9D;
+      }
+
+      &.next-btn, &.submit-btn {
+        background: linear-gradient(135deg, #FF6B9D 0%, #FF8E8E 100%);
+        color: #ffffff;
+        box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
+      }
+
+      &.disabled, &[disabled] {
+        opacity: 0.4;
+      }
+
+      &:active:not([disabled]) {
+        transform: scale(0.97);
+      }
+
+      &.full-width {
+        flex: 1;
+      }
+    }
+  }
+}

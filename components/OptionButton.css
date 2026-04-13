@@ -1,0 +1,31 @@
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #dbe8dd;
+  background: #fff;
+  transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
+}
+
+.option-btn:active {
+  transform: scale(0.98);
+}
+
+.option-btn.selected {
+  border-color: #6c8d71;
+  background: #f0f7f1;
+}
+
+.option-code {
+  font-weight: 800;
+  color: #4d6a53;
+  min-width: 22px;
+}
+
+.option-label {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1e2a22;
+}

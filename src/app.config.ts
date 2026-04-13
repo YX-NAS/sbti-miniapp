@@ -1,0 +1,13 @@
+export default {
+  pages: [
+    'pages/home/index',
+    'pages/test/index',
+    'pages/result/index'
+  ],
+  window: {
+    backgroundTextStyle: 'light',
+    navigationBarBackgroundColor: '#fff',
+    navigationBarTitleText: 'SBTI测试',
+    navigationBarTextStyle: 'black'
+  }
+}

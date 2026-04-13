@@ -1,0 +1,24 @@
+export default defineAppConfig({
+  pages: [
+    'pages/index/index',
+    'pages/test/test',
+    'pages/result/result'
+  ],
+  window: {
+    navigationBarTitleText: 'SBTI 人格测试',
+    navigationBarBackgroundColor: '#f6faf6',
+    navigationBarTextStyle: 'black',
+    backgroundColor: '#f6faf6',
+    backgroundTextStyle: 'light',
+    enablePullDownRefresh: false
+  },
+  tabBar: {
+    color: '#6a786f',
+    selectedColor: '#6c8d71',
+    backgroundColor: '#ffffff',
+    borderStyle: 'white',
+    list: []
+  },
+  sitemapLocation: 'sitemap.json',
+  lazyCodeLoading: 'requiredComponents'
+})
