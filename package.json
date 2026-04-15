@@ -22,7 +22,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
+    "@babel/preset-react": "^7.28.5",
     "@tarojs/cli": "^4.0.0",
+    "@tarojs/webpack5-runner": "^4.2.0",
     "@types/react": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
@@ -30,7 +32,8 @@
     "eslint": "^8.57.0",
     "eslint-config-taro": "^4.0.0",
     "eslint-plugin-react": "^7.34.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "webpack": "^5.95.0"
   },
   "engines": {
     "node": ">=18.0.0"

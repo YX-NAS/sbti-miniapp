@@ -1,0 +1,392 @@
+// 室友匹配页面
+// 配色：蓝色温馨主题
+
+.match-container {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #E5F3FF 0%, #FFF0E5 50%, #F0FFF0 100%);
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 40px;
+}
+
+// ==================== 顶部装饰 ====================
+.top-decor {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 400px;
+  pointer-events: none;
+
+  .decor-circle {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .c1 {
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: #4D96FF;
+    opacity: 0.25;
+  }
+
+  .c2 {
+    top: 80px; left: -80px;
+    width: 200px; height: 200px;
+    background: #FFD93D;
+    opacity: 0.2;
+  }
+
+  .c3 {
+    top: 160px; right: 40px;
+    width: 120px; height: 120px;
+    background: #6BCB77;
+    opacity: 0.18;
+  }
+}
+
+// ==================== 页面标题 ====================
+.page-header {
+  position: relative;
+  z-index: 1;
+  padding: 120px 48px 32px;
+  text-align: center;
+
+  .page-title {
+    display: block;
+    font-size: 48rpx;
+    font-weight: 800;
+    color: #5A4A4A;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .page-subtitle {
+    display: block;
+    font-size: 28rpx;
+    color: #7A5A6A;
+    letter-spacing: 1px;
+  }
+}
+
+// ==================== 选择区域 ====================
+.select-section {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 32px;
+  margin-bottom: 16px;
+}
+
+.select-card {
+  flex: 1;
+  max-width: 220px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  padding: 24px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+
+  .select-label {
+    display: block;
+    font-size: 24rpx;
+    color: #7A5A6A;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .sign-picked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    .sign-emoji {
+      font-size: 48px;
+      line-height: 1;
+    }
+
+    .sign-name {
+      font-size: 30rpx;
+      font-weight: 700;
+      color: #5A4A4A;
+    }
+  }
+}
+
+.select-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .plus-icon {
+    font-size: 40px;
+    color: #4D96FF;
+    font-weight: 700;
+  }
+}
+
+// ==================== 星座选择器 ====================
+.sign-selector-wrap {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  margin: 12px 24px;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+  .selector-hint {
+    display: block;
+    padding: 20px 24px 0;
+    font-size: 26rpx;
+    color: #7A5A6A;
+    letter-spacing: 1px;
+  }
+}
+
+// ==================== 匹配按钮 ====================
+.match-btn-wrap {
+  position: relative;
+  z-index: 1;
+  padding: 24px 48px;
+}
+
+.match-btn {
+  width: 100% !important;
+  height: 100px !important;
+  line-height: 100px !important;
+  background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+  color: #FFFFFF !important;
+  font-size: 38rpx !important;
+  font-weight: 700 !important;
+  border-radius: 50px !important;
+  border: none !important;
+  letter-spacing: 3px;
+  box-shadow: 0 8px 32px rgba(77, 150, 255, 0.35) !important;
+
+  &::after { border: none !important; }
+  &:active { transform: scale(0.97); }
+}
+
+// ==================== 结果区域 ====================
+.result-section {
+  position: relative;
+  z-index: 1;
+  padding: 0 32px;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-radius: 32px;
+  padding: 48px 36px 40px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  .result-decor {
+    position: absolute;
+    border-radius: 50%;
+    &.decor-left {
+      bottom: -60px; left: -60px;
+      width: 200px; height: 200px;
+      background: #4D96FF;
+      opacity: 0.12;
+    }
+    &.decor-right {
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: #6BCB77;
+      opacity: 0.1;
+    }
+  }
+}
+
+// ==================== 分数区 ====================
+.score-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+
+  .signs-combo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .combo-emoji {
+      font-size: 52px;
+    }
+
+    .combo-plus {
+      font-size: 36px;
+      color: #7A5A6A;
+      font-weight: 700;
+    }
+  }
+
+  .score-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 8px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    .score-num {
+      font-size: 96rpx;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .score-percent {
+      font-size: 36rpx;
+      font-weight: 700;
+    }
+  }
+
+  .match-type-label {
+    font-size: 36rpx;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+}
+
+// ==================== 总结 ====================
+.result-summary {
+  background: rgba(77, 150, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+
+  .summary-text {
+    font-size: 28rpx;
+    color: #5A4A4A;
+    line-height: 1.8;
+    font-style: italic;
+    text-align: center;
+    display: block;
+  }
+}
+
+// ==================== 建议区 ====================
+.advice-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+
+  .advice-block {
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 20px;
+    padding: 24px;
+  }
+
+  .advice-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+
+    .advice-icon {
+      font-size: 28px;
+    }
+
+    .advice-title {
+      font-size: 30rpx;
+      font-weight: 700;
+      color: #5A4A4A;
+      letter-spacing: 1px;
+    }
+  }
+
+  .advice-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+
+    &:last-child { margin-bottom: 0; }
+
+    .advice-bullet {
+      color: #4D96FF;
+      font-size: 28rpx;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+
+    .advice-text {
+      font-size: 26rpx;
+      color: #7A5A6A;
+      line-height: 1.6;
+    }
+  }
+}
+
+// ==================== 操作按钮 ====================
+.action-btns {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+
+  .share-btn {
+    flex: 1;
+    height: 88px !important;
+    line-height: 88px !important;
+    background: linear-gradient(135deg, #4D96FF 0%, #6BCB77 100%) !important;
+    color: #FFFFFF !important;
+    font-size: 30rpx !important;
+    font-weight: 700 !important;
+    border-radius: 44px !important;
+    border: none !important;
+    letter-spacing: 2px;
+    box-shadow: 0 6px 20px rgba(77, 150, 255, 0.3) !important;
+
+    &::after { border: none !important; }
+    &:active { transform: scale(0.97); }
+  }
+
+  .reset-btn {
+    flex: 1;
+    height: 88px !important;
+    line-height: 88px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #7A5A6A !important;
+    font-size: 30rpx !important;
+    font-weight: 600 !important;
+    border-radius: 44px !important;
+    border: 2px solid rgba(0, 0, 0, 0.08) !important;
+    letter-spacing: 2px;
+
+    &::after { border: none !important; }
+    &:active { transform: scale(0.97); }
+  }
+}
+
+// ==================== 底部 ====================
+.bottom-spacer {
+  height: 60px;
+}

@@ -1,0 +1,36 @@
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+
+  .score-number {
+    font-size: 120rpx;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 28rpx;
+    color: #7A5A6A;
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+
+  .score-tag {
+    margin-top: 16px;
+    padding: 6px 24px;
+    border-radius: 50px;
+    font-size: 24rpx;
+    font-weight: 600;
+  }
+
+  &.large {
+    .score-number {
+      font-size: 160rpx;
+    }
+    .score-label {
+      font-size: 32rpx;
+    }
+  }
+}

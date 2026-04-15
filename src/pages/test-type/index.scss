@@ -1,0 +1,115 @@
+// 测试类型选择页
+
+.test-type-container {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #F8FAFF 0%, #EEF2FF 50%, #F6F0FF 100%);
+  padding-bottom: 60px;
+}
+
+// ==================== 页面头部 ====================
+.page-header {
+  padding: 80px 40px 32px;
+  text-align: center;
+
+  .page-title {
+    display: block;
+    font-size: 52rpx;
+    font-weight: 800;
+    color: #2A2A3A;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .page-subtitle {
+    display: block;
+    font-size: 28rpx;
+    color: #6A6A8A;
+    letter-spacing: 1px;
+  }
+}
+
+// ==================== 测试卡片网格 ====================
+.test-grid {
+  padding: 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.test-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 28px 28px 24px;
+  border: 1.5px solid;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+
+    .card-emoji {
+      font-size: 44px;
+    }
+  }
+
+  .card-title {
+    display: block;
+    font-size: 36rpx;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .card-desc {
+    display: block;
+    font-size: 26rpx;
+    color: #6A6A8A;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    border-radius: 32px;
+    opacity: 0.9;
+
+    .card-btn-text {
+      font-size: 28rpx;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+// 即将上线标签
+.coming-tag {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 4px 12px;
+
+  .coming-text {
+    font-size: 22rpx;
+    color: #8A8AAA;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+}
+
+// ==================== 底部提示 ====================
+.bottom-tip {
+  padding: 40px 32px 0;
+  text-align: center;
+
+  .tip-text {
+    font-size: 26rpx;
+    color: #9A9ABA;
+    letter-spacing: 1px;
+  }
+}

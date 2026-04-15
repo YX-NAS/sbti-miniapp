@@ -1,0 +1,289 @@
+// 星座运势页面样式
+// 配色：紫色神秘主题
+
+.constellation-container {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #F3E8FF 0%, #EDE4FF 40%, #FFF0F6 100%);
+  padding-bottom: 40px;
+}
+
+// ==================== 顶部 Banner ====================
+.top-banner {
+  position: relative;
+  padding: 60px 32px 24px;
+  overflow: hidden;
+
+  .banner-decor {
+    position: absolute;
+    border-radius: 50%;
+    &.decor-1 {
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: #B784E8;
+      opacity: 0.2;
+    }
+    &.decor-2 {
+      top: 20px; left: -60px;
+      width: 120px; height: 120px;
+      background: #FFD93D;
+      opacity: 0.15;
+    }
+    &.decor-3 {
+      bottom: -30px; right: 60px;
+      width: 100px; height: 100px;
+      background: #FF6B9D;
+      opacity: 0.15;
+    }
+  }
+
+  .banner-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .banner-emoji {
+    font-size: 72px;
+    line-height: 1;
+  }
+
+  .banner-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .banner-name {
+    font-size: 48rpx;
+    font-weight: 800;
+    color: #5A4A4A;
+    letter-spacing: 2px;
+  }
+
+  .banner-date {
+    font-size: 26rpx;
+    color: #7A5A6A;
+    letter-spacing: 1px;
+  }
+}
+
+// ==================== 星座选择器 ====================
+.sign-selector-section {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  margin: 0 24px;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+// ==================== Tab切换 ====================
+.period-tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 32px;
+  margin: 0 24px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+
+  .period-tab {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 30rpx;
+    color: #7A5A6A;
+    transition: all 0.2s ease;
+
+    &.active {
+      background: rgba(255, 107, 157, 0.12);
+      color: #FF6B9D;
+      font-weight: 700;
+    }
+  }
+}
+
+// ==================== 运势内容区 ====================
+.fortune-content {
+  padding: 0 32px;
+  margin-top: 8px;
+}
+
+// ==================== 五维雷达 ====================
+.radar-section, .lucky-section {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  padding: 28px 28px 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #5A4A4A;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+.radar-list {
+  padding-bottom: 8px;
+}
+
+// ==================== 短评气泡 ====================
+.short-comment {
+  background: rgba(255, 107, 157, 0.1);
+  border-radius: 20px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 107, 157, 0.15);
+
+  .comment-text {
+    font-size: 30rpx;
+    color: #5A4A4A;
+    line-height: 1.8;
+    font-style: italic;
+  }
+}
+
+// ==================== 详情折叠面板 ====================
+.detail-section {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+  .detail-toggle {
+    padding: 24px 28px;
+    text-align: center;
+
+    .toggle-text {
+      font-size: 28rpx;
+      color: #7A5A6A;
+      letter-spacing: 1px;
+    }
+  }
+
+  .detail-list {
+    padding: 0 28px 28px;
+  }
+
+  .detail-item {
+    display: flex;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .detail-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .detail-body {
+      flex: 1;
+    }
+
+    .detail-label {
+      display: block;
+      font-size: 28rpx;
+      font-weight: 700;
+      color: #5A4A4A;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .detail-text {
+      display: block;
+      font-size: 26rpx;
+      color: #7A5A6A;
+      line-height: 1.8;
+    }
+  }
+}
+
+// ==================== 考试运势专属 ====================
+.exam-section {
+  .exam-tip-card {
+    background: rgba(183, 132, 232, 0.1);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(183, 132, 232, 0.2);
+
+    .exam-tip-text {
+      font-size: 28rpx;
+      color: #5A4A4A;
+      line-height: 1.8;
+    }
+  }
+}
+
+.wish-btn-wrap {
+  margin-bottom: 8px;
+}
+
+.wish-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100px;
+  background: linear-gradient(135deg, #00D4AA 0%, #00B894 100%);
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(0, 212, 170, 0.3);
+
+  &::after { border: none !important; }
+
+  &:active { transform: scale(0.97); }
+
+  &.wished {
+    background: rgba(0, 212, 170, 0.12);
+    border: 2px solid #00D4AA;
+    box-shadow: none;
+
+    .wish-btn-text { color: #00D4AA; }
+  }
+
+  .wish-btn-text {
+    font-size: 36rpx;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 3px;
+  }
+
+  .wish-count {
+    font-size: 24rpx;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 1px;
+  }
+
+  &.wished .wish-count {
+    color: #00D4AA;
+  }
+}
+
+// ==================== 底部 ====================
+.bottom-spacer {
+  height: 60px;
+}
+
+.error-text {
+  display: block;
+  text-align: center;
+  padding: 100px;
+  font-size: 32rpx;
+  color: #7A5A6A;
+}
