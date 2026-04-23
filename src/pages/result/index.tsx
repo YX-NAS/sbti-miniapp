@@ -1,14 +1,13 @@
 import { View, Text, Button, ScrollView } from '@tarojs/components'
 import { useState, useEffect } from 'react'
-import Taro, { useRouter } from '@tarojs/taro'
+import Taro, { useRouter, useShareAppMessage } from '@tarojs/taro'
 import {
-  buildShuffledQuestions,
   computeResult,
   getDimExplanation,
   type TestResult
 } from '../../utils/calculator'
 import { dimensionOrder, dimensionMeta } from '../../utils/data'
-import { dailyReportCheck } from '../../utils/tencentCloud'
+import { dailyReportCheck, getOrCreateDeviceId } from '../../utils/tencentCloud'
 import './index.scss'
 
 export default function Result() {
@@ -20,8 +19,7 @@ export default function Result() {
     if (params.answers) {
       try {
         const answers = JSON.parse(decodeURIComponent(params.answers)) as Record<string, number>
-        const shuffledQuestions = buildShuffledQuestions()
-        const computed = computeResult(shuffledQuestions, answers)
+        const computed = computeResult(answers)
         setResult(computed)
       } catch (e) {
         console.error('Failed to compute result:', e)
@@ -29,15 +27,19 @@ export default function Result() {
     }
   }, [])
 
+  useShareAppMessage(() => {
+    if (result) {
+      const deviceId = getOrCreateDeviceId()
+      dailyReportCheck(deviceId, result.finalType.code, result.finalType.cn)
+    }
+    return {
+      title: result ? `我的SBTI人格是「${result.finalType.code} ${result.finalType.cn}」` : 'SBTI 性格测试',
+      path: '/pages/index/index',
+    }
+  })
+
   const handleRetest = () => {
     Taro.redirectTo({ url: '/pages/test/index' })
-  }
-
-  const handleShare = () => {
-    if (result) {
-      // 每日首次分享时上报到 SCF
-      dailyReportCheck('openid_placeholder', result.finalType.code, result.finalType.cn)
-    }
   }
 
   if (!result) {
@@ -79,7 +81,7 @@ export default function Result() {
             const level = result.levels[dim]
             const explanation = getDimExplanation(dim, level)
             const score = result.rawScores[dim]
-            const maxScore = dim.startsWith('So') ? 25 : 10 // So维度5题，其他2题
+            const maxScore = 6 // 每维度 2 题，每题最高分 3
             return (
               <View key={dim} className="dim-item">
                 <View className="dim-header">

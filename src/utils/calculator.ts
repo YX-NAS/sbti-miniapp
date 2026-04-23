@@ -87,7 +87,6 @@ export function getVisibleQuestions(
 }
 
 export function computeResult(
-  shuffledQuestions: Question[],
   answers: Record<string, number>
 ): TestResult {
   const rawScores: Record<string, number> = {};

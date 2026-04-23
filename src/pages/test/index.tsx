@@ -1,30 +1,30 @@
 import { View, Text, Button, ScrollView } from '@tarojs/components'
 import { useState, useEffect } from 'react'
-import Taro, { useRouter, useDidShow } from '@tarojs/taro'
-import { questions as allQuestions, specialQuestions } from '../../utils/data'
-import { buildShuffledQuestions } from '../../utils/calculator'
+import Taro, { useDidShow } from '@tarojs/taro'
+import { buildShuffledQuestions, getVisibleQuestions } from '../../utils/calculator'
 import type { Question } from '../../utils/data'
 import './index.scss'
 
 type AnswerMap = Record<string, number>
 
 export default function Test() {
-  const router = useRouter()
-  const [shuffledQuestions, setShuffledQuestions] = useState<Question[]>([])
+  const [baseQuestions, setBaseQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<AnswerMap>({})
   const [selectedValue, setSelectedValue] = useState<number | null>(null)
 
   useDidShow(() => {
     // 重置测试状态
-    setShuffledQuestions(buildShuffledQuestions())
+    setBaseQuestions(buildShuffledQuestions())
     setCurrentIndex(0)
     setAnswers({})
     setSelectedValue(null)
   })
 
-  const currentQuestion = shuffledQuestions[currentIndex]
-  const totalQuestions = shuffledQuestions.length
+  // 根据当前答案动态计算可见题目（drink gate Q2 按需显示）
+  const visibleQuestions = getVisibleQuestions(baseQuestions, answers)
+  const currentQuestion = visibleQuestions[currentIndex]
+  const totalQuestions = visibleQuestions.length
   const progress = currentIndex + 1
 
   useEffect(() => {
@@ -68,11 +68,6 @@ export default function Test() {
 
   const isLastQuestion = currentIndex === totalQuestions - 1
   const canGoNext = selectedValue !== null
-
-  const getOptionLabel = (opt: { label: string; value: number }, idx: number) => {
-    const letters = ['A', 'B', 'C', 'D']
-    return `${letters[idx]}. ${opt.label}`
-  }
 
   if (!currentQuestion) {
     return (

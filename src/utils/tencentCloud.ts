@@ -2,8 +2,10 @@
  * 腾讯云 SCF 调用工具（纯 JS，无依赖）
  * TC3-HMAC-SHA256 签名
  */
+import Taro from '@tarojs/taro'
 
 // ========== 配置 ==========
+// 填写真实密钥后云端上报功能生效；留占位符时静默降级，不影响小程序运行。
 const SECRET_ID='YOUR_SECRET_ID'
 const SECRET_KEY='YOUR_SECRET_KEY'
 const REGION = 'ap-beijing'
@@ -120,4 +122,38 @@ export async function callSCF(event: Record<string,any>): Promise<ScfResult> {
     body: payload,
   })
   return await res.json()
+}
+
+// ========== 设备唯一标识 ==========
+const DEVICE_ID_KEY = 'sbti_device_id'
+
+export function getOrCreateDeviceId(): string {
+  let id = Taro.getStorageSync<string>(DEVICE_ID_KEY)
+  if (!id) {
+    id = `dev_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`
+    Taro.setStorageSync(DEVICE_ID_KEY, id)
+  }
+  return id
+}
+
+// ========== 每日分享上报（防重） ==========
+const CREDENTIALS_CONFIGURED = SECRET_ID !== 'YOUR_SECRET_ID' && SECRET_KEY !== 'YOUR_SECRET_KEY'
+
+export async function dailyReportCheck(
+  openid: string,
+  typeCode: string,
+  typeName: string
+): Promise<void> {
+  if (!CREDENTIALS_CONFIGURED) return
+
+  try {
+    const today = new Date().toISOString().slice(0, 10)
+    const key = `daily_report_${today}`
+    if (Taro.getStorageSync(key)) return
+
+    await callSCF({ action: 'share', openid, typeCode, typeName, date: today })
+    Taro.setStorageSync(key, '1')
+  } catch (e) {
+    console.warn('[dailyReportCheck] 上报失败:', e)
+  }
 }
