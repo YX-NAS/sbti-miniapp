@@ -129,6 +129,34 @@
     }
   }
 
+  .share-guide-card {
+    .copy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .copy-chip {
+      background: #FFF5F8;
+      border: 1.5px solid rgba(255, 107, 157, 0.18);
+      border-radius: 22px;
+      padding: 18px 20px;
+    }
+
+    .copy-chip-text {
+      font-size: 28rpx;
+      color: #5A4A4A;
+      line-height: 1.6;
+    }
+
+    .guide-tip {
+      font-size: 24rpx;
+      color: #8A7A8A;
+      line-height: 1.6;
+    }
+  }
+
   // 15维度 - 可爱风
   .dims-card {
     .dim-item {
@@ -228,6 +256,46 @@
     .secondary-match {
       font-size: 26rpx;
       color: #7a7a7a;
+    }
+  }
+
+  .growth-card {
+    .growth-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .growth-action-btn {
+      border-radius: 24px;
+      padding: 22px 20px;
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+
+    .topic-action {
+      background: linear-gradient(135deg, #FFF0F6 0%, #FFE5EC 100%);
+    }
+
+    .daily-action {
+      background: linear-gradient(135deg, #EEF7FF 0%, #E5F3FF 100%);
+    }
+
+    .growth-action-title {
+      display: block;
+      font-size: 30rpx;
+      font-weight: 700;
+      color: #4A4A4A;
+      margin-bottom: 8px;
+    }
+
+    .growth-action-desc {
+      display: block;
+      font-size: 24rpx;
+      color: #7A6A7A;
+      line-height: 1.5;
     }
   }
 

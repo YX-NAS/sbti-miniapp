@@ -1,5 +1,6 @@
 import { View, Text, Button } from '@tarojs/components'
 import Taro, { useShareAppMessage, useShareTimeline } from '@tarojs/taro'
+import { trackEvent } from '../../utils/analytics'
 import './index.scss'
 
 // 功能卡片配置
@@ -51,6 +52,51 @@ const FUNCTION_CARDS = [
   },
 ]
 
+const HOT_TESTS = [
+  {
+    id: 'hot-char',
+    emoji: '🏠',
+    title: '宿舍气场测试',
+    desc: '4题看你在宿舍里是哪种存在',
+    tag: '学生热门',
+    color: '#FF6B9D',
+    path: '/pages/test-by-type/index?type=char',
+  },
+  {
+    id: 'hot-love',
+    emoji: '💘',
+    title: '暗恋反应测试',
+    desc: '心动时你到底有多明显',
+    tag: '适合分享',
+    color: '#FF8C7A',
+    path: '/pages/test-by-type/index?type=love',
+  },
+  {
+    id: 'hot-study',
+    emoji: '📚',
+    title: '考前状态测试',
+    desc: '看看你属于哪种复习节奏',
+    tag: '考前必测',
+    color: '#4D96FF',
+    path: '/pages/test-by-type/index?type=study',
+  },
+]
+
+const FEATURE_TOPICS = [
+  {
+    id: 'topic-center',
+    title: '学生专题快测',
+    desc: '宿舍 / 暗恋 / 学习 / 趣味',
+    path: '/pages/test-type/index',
+  },
+  {
+    id: 'topic-daily',
+    title: '今日一测',
+    desc: '每天一道，适合发朋友和群聊',
+    path: '/pages/daily-test/index',
+  },
+]
+
 export default function Index() {
   useShareAppMessage(() => ({
     title: '🌟 星座人格实验室 — 探索你的性格特质',
@@ -62,11 +108,13 @@ export default function Index() {
     query: '',
   }))
 
-  const handleCardClick = (path: string) => {
+  const handleCardClick = (path: string, source: string, entryId: string) => {
+    trackEvent('home_entry_click', { source, entryId })
     Taro.navigateTo({ url: path })
   }
 
   const handleSbtiStart = () => {
+    trackEvent('home_entry_click', { source: 'sbti-banner', entryId: 'sbti-main-test' })
     Taro.navigateTo({ url: '/pages/test/index' })
   }
 
@@ -95,7 +143,7 @@ export default function Index() {
                 background: card.bgLight,
                 borderColor: `${card.color}30`
               }}
-              onClick={() => handleCardClick(card.path)}
+              onClick={() => handleCardClick(card.path, 'function-card', card.id)}
             >
               <Text className="card-emoji">{card.emoji}</Text>
               <Text className="card-title" style={{ color: card.color }}>{card.title}</Text>
@@ -113,7 +161,7 @@ export default function Index() {
                 background: card.bgLight,
                 borderColor: `${card.color}30`
               }}
-              onClick={() => handleCardClick(card.path)}
+              onClick={() => handleCardClick(card.path, 'function-card', card.id)}
             >
               <Text className="card-emoji">{card.emoji}</Text>
               <Text className="card-title" style={{ color: card.color }}>{card.title}</Text>
@@ -122,6 +170,51 @@ export default function Index() {
           ))}
           {/* 占位，保持两列对称 */}
           <View className="func-card-placeholder" />
+        </View>
+      </View>
+
+      <View className="section-block">
+        <View className="section-heading">
+          <Text className="section-title">🔥 本周热门</Text>
+          <Text className="section-desc">第一阶段重点主推的学生场景测试</Text>
+        </View>
+        <View className="hot-test-list">
+          {HOT_TESTS.map(item => (
+            <View
+              key={item.id}
+              className="hot-test-card"
+              onClick={() => handleCardClick(item.path, 'hot-test', item.id)}
+            >
+              <View className="hot-test-top">
+                <Text className="hot-test-emoji">{item.emoji}</Text>
+                <Text className="hot-test-tag" style={{ color: item.color, background: `${item.color}16` }}>
+                  {item.tag}
+                </Text>
+              </View>
+              <Text className="hot-test-title">{item.title}</Text>
+              <Text className="hot-test-desc">{item.desc}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View className="section-block">
+        <View className="section-heading">
+          <Text className="section-title">🎒 学生专题</Text>
+          <Text className="section-desc">更适合发给同学和朋友的快测入口</Text>
+        </View>
+        <View className="topic-grid">
+          {FEATURE_TOPICS.map(item => (
+            <View
+              key={item.id}
+              className="topic-card"
+              onClick={() => handleCardClick(item.path, 'topic-entry', item.id)}
+            >
+              <Text className="topic-title">{item.title}</Text>
+              <Text className="topic-desc">{item.desc}</Text>
+              <Text className="topic-arrow">立即进入 →</Text>
+            </View>
+          ))}
         </View>
       </View>
 

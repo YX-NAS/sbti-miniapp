@@ -8,6 +8,7 @@ import {
 } from '../../utils/calculator'
 import { dimensionOrder, dimensionMeta } from '../../utils/data'
 import { dailyReportCheck, getOrCreateDeviceId } from '../../utils/tencentCloud'
+import { trackEvent } from '../../utils/analytics'
 import SharePoster from '../../components/SharePoster/index'
 import './index.scss'
 
@@ -33,6 +34,7 @@ export default function Result() {
     if (result) {
       const deviceId = getOrCreateDeviceId()
       dailyReportCheck(deviceId, result.finalType.code, result.finalType.cn)
+      trackEvent('sbti_result_shared', { type: result.finalType.code, channel: 'friend' })
     }
     return {
       title: result
@@ -43,15 +45,32 @@ export default function Result() {
   })
 
   // 支持分享到朋友圈
-  useShareTimeline(() => ({
-    title: result
-      ? `SBTI 测出我是「${result.finalType.code} ${result.finalType.cn}」`
-      : '🌟 SBTI 性格测试',
-    query: '',
-  }))
+  useShareTimeline(() => {
+    if (result) {
+      trackEvent('sbti_result_shared', { type: result.finalType.code, channel: 'timeline' })
+    }
+
+    return {
+      title: result
+        ? `SBTI 测出我是「${result.finalType.code} ${result.finalType.cn}」`
+        : '🌟 SBTI 性格测试',
+      query: '',
+    }
+  })
 
   const handleRetest = () => {
+    trackEvent('sbti_result_retest', { type: result?.finalType.code || '' })
     Taro.redirectTo({ url: '/pages/test/index' })
+  }
+
+  const handlePosterOpen = () => {
+    trackEvent('sbti_result_poster_open', { type: result?.finalType.code || '' })
+    setShowPoster(true)
+  }
+
+  const handleExplore = (path: string, entryId: string) => {
+    trackEvent('sbti_result_next_click', { type: result?.finalType.code || '', entryId })
+    Taro.navigateTo({ url: path })
   }
 
   if (!result) {
@@ -63,6 +82,12 @@ export default function Result() {
       </View>
     )
   }
+
+  const shareCopyLines = [
+    `${result.finalType.code} ${result.finalType.cn}｜${result.badge}`,
+    `朋友说这个结果像我本人，快来测测你是哪一型`,
+    `测完顺手发群里，看看谁和我最像`,
+  ]
 
   return (
     <View className="result-container">
@@ -84,6 +109,18 @@ export default function Result() {
         <View className="card desc-card">
           <Text className="card-title">人格解读</Text>
           <Text className="desc-text">{result.finalType.desc}</Text>
+        </View>
+
+        <View className="card share-guide-card">
+          <Text className="card-title">适合发圈的文案</Text>
+          <View className="copy-list">
+            {shareCopyLines.map(copy => (
+              <View key={copy} className="copy-chip">
+                <Text className="copy-chip-text">{copy}</Text>
+              </View>
+            ))}
+          </View>
+          <Text className="guide-tip">建议配合分享海报一起发，转发和保存意愿更强。</Text>
         </View>
 
         {/* 15维度分数 */}
@@ -138,12 +175,26 @@ export default function Result() {
           </View>
         )}
 
+        <View className="card growth-card">
+          <Text className="card-title">下一步可以试试</Text>
+          <View className="growth-actions">
+            <View className="growth-action-btn topic-action" onClick={() => handleExplore('/pages/test-type/index', 'topic-tests')}>
+              <Text className="growth-action-title">学生专题快测</Text>
+              <Text className="growth-action-desc">宿舍 / 暗恋 / 学习 / 趣味</Text>
+            </View>
+            <View className="growth-action-btn daily-action" onClick={() => handleExplore('/pages/daily-test/index', 'daily-test')}>
+              <Text className="growth-action-title">今日一测</Text>
+              <Text className="growth-action-desc">每天一道，适合顺手分享</Text>
+            </View>
+          </View>
+        </View>
+
         <View className="spacer" />
       </ScrollView>
 
       <View className="result-footer">
-        <Button className="poster-btn" onClick={() => setShowPoster(true)}>🎨 生成分享图</Button>
-        <Button className="share-btn" open-type="share">发送给朋友</Button>
+        <Button className="poster-btn" onClick={handlePosterOpen}>🎨 生成海报</Button>
+        <Button className="share-btn" open-type="share">晒给朋友</Button>
         <Button className="retest-btn" onClick={handleRetest}>重新测试</Button>
       </View>
     </View>

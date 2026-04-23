@@ -28,12 +28,31 @@
   }
 }
 
+.section-title-row {
+  padding: 12px 32px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  .section-title {
+    font-size: 30rpx;
+    font-weight: 800;
+    color: #2A2A3A;
+  }
+
+  .section-subtitle {
+    font-size: 22rpx;
+    color: #8A8AAA;
+  }
+}
+
 // ==================== 测试卡片网格 ====================
 .test-grid {
   padding: 0 28px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-bottom: 24px;
 }
 
 .test-card {
@@ -88,15 +107,14 @@
   }
 }
 
-// 即将上线标签
-.coming-tag {
-  background: rgba(0, 0, 0, 0.06);
+.available-tag {
+  background: rgba(255, 255, 255, 0.75);
   border-radius: 12px;
   padding: 4px 12px;
 
-  .coming-text {
+  .available-text {
     font-size: 22rpx;
-    color: #8A8AAA;
+    color: #5A5A7A;
     font-weight: 600;
     letter-spacing: 1px;
   }

@@ -6,6 +6,7 @@ export default {
     'pages/daily-test/index',
     'pages/couple-match/index',
     'pages/test-type/index',
+    'pages/test-by-type/index',
     'pages/test/index',
     'pages/result/index',
   ],
