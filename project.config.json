@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "dist/",
   "projectname": "SBTI人格测试",
-  "appid": "touristappid",
+  "appid": "wx1575aed7b9b0eb82",
   "setting": {
     "urlCheck": false,
     "es6": true,
@@ -37,10 +37,22 @@
     "disableUseStrict": false,
     "minimizeWXSS": true,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "compileWorklet": false,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
   },
   "compileType": "miniprogram",
   "libVersion": "3.3.5",
   "srcMiniprogramRoot": "dist/",
-  "condition": {}
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {}
 }

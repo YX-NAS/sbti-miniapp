@@ -1,5 +1,5 @@
 import { View, Text } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useShareAppMessage } from '@tarojs/taro'
 import { useState, useEffect } from 'react'
 import dailyQuestionsData from '../../data/daily_questions.json'
 import './index.scss'
@@ -27,6 +27,13 @@ export default function DailyTest() {
   const [selected, setSelected] = useState<string | null>(null)
   const [answered, setAnswered] = useState(false)
   const [result, setResult] = useState(question.result)
+
+  useShareAppMessage(() => ({
+    title: answered && result
+      ? `🔮 今日测试：${question.question} — 我的结果是「${result.title}」`
+      : `🔮 今日一测：${question.question}，来挑战吧！`,
+    path: '/pages/daily-test/index',
+  }))
 
   const handleSelect = (label: string) => {
     if (answered) return

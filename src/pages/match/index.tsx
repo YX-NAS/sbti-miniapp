@@ -1,5 +1,5 @@
 import { View, Text, Button } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useShareAppMessage } from '@tarojs/taro'
 import { useState } from 'react'
 import SignSelector from '../../components/SignSelector/index'
 import { calcMatch, ALL_SIGNS, getMatchColor, getMatchLabelText } from '../../utils/match_calculator'
@@ -10,6 +10,13 @@ export default function Match() {
   const [signB, setSignB] = useState('taurus')
   const [result, setResult] = useState<ReturnType<typeof calcMatch>>(null)
   const [matched, setMatched] = useState(false)
+
+  useShareAppMessage(() => ({
+    title: result
+      ? `${result.signAEmoji}${result.signAName} × ${result.signBEmoji}${result.signBName} 室友合拍度 ${result.score}分`
+      : '🏠 室友/搭档匹配 — 看看你们星座合拍程度',
+    path: '/pages/match/index',
+  }))
 
   const handleMatch = () => {
     const res = calcMatch(signA, signB)
@@ -25,11 +32,7 @@ export default function Match() {
   }
 
   const handleShare = () => {
-    if (!result) return
-    Taro.setClipboardData({
-      data: result.shareText,
-      success: () => Taro.showToast({ title: '分享文案已复制', icon: 'none', duration: 2000 }),
-    })
+    Taro.showShareMenu({ withShareTicket: false })
   }
 
   const color = result ? getMatchColor(result.score) : '#6BCB77'
@@ -159,7 +162,7 @@ export default function Match() {
 
             {/* 操作按钮 */}
             <View className="action-btns">
-              <Button className="share-btn" onClick={handleShare}>
+              <Button className="share-btn" open-type="share">
                 🔗 分享给室友
               </Button>
               <Button className="reset-btn" onClick={handleReset}>

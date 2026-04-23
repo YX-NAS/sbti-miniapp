@@ -1,5 +1,5 @@
 import { View, Text, Button } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useShareAppMessage } from '@tarojs/taro'
 import { useState } from 'react'
 import SignSelector from '../../components/SignSelector/index'
 import { calcCp, ALL_SIGNS, getCpColor, getCpLabelText, getCpLevelName } from '../../utils/cp_calculator'
@@ -10,6 +10,14 @@ export default function CoupleMatch() {
   const [signB, setSignB] = useState('libra')   // 女生
   const [result, setResult] = useState<ReturnType<typeof calcCp>>(null)
   const [matched, setMatched] = useState(false)
+
+  // 自定义分享内容：有结果时显示 CP 分数，否则显示通用引导
+  useShareAppMessage(() => ({
+    title: result
+      ? `${result.signAEmoji}${result.signAName} × ${result.signBEmoji}${result.signBName} CP 指数 ${result.score}分 — ${result.label}`
+      : '💑 CP配对 — 看看你们的星座合拍指数',
+    path: '/pages/couple-match/index',
+  }))
 
   const handleMatch = () => {
     const res = calcCp(signA, signB)
@@ -26,10 +34,7 @@ export default function CoupleMatch() {
 
   const handleShare = () => {
     if (!result) return
-    Taro.setClipboardData({
-      data: result.shareText,
-      success: () => Taro.showToast({ title: '分享文案已复制', icon: 'none', duration: 2000 }),
-    })
+    Taro.showShareMenu({ withShareTicket: false })
   }
 
   const color = result ? getCpColor(result.score) : '#FF6B9D'
@@ -171,7 +176,7 @@ export default function CoupleMatch() {
 
             {/* 操作按钮 */}
             <View className="action-btns">
-              <Button className="share-btn" onClick={handleShare}>
+              <Button className="share-btn" open-type="share">
                 🔗 分享给朋友
               </Button>
               <Button className="reset-btn" onClick={handleReset}>

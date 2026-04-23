@@ -239,34 +239,41 @@
     background: #ffffff;
     border-top: 2px solid rgba(255, 107, 157, 0.1);
     display: flex;
-    gap: 16px;
+    gap: 12px;
 
-    .share-btn, .retest-btn {
+    .poster-btn, .share-btn, .retest-btn {
       flex: 1;
-      height: 96px;
-      line-height: 96px;
-      border-radius: 48px;
-      font-size: 34rpx;
+      height: 88rpx;
+      line-height: 88rpx;
+      border-radius: 44rpx;
+      font-size: 28rpx;
       font-weight: 700;
       border: none;
       transition: all 0.2s;
+
       &::after { border: none; }
 
       &:active {
-        transform: scale(0.97);
+        transform: scale(0.96);
       }
+    }
+
+    .poster-btn {
+      background: linear-gradient(135deg, #FFD93D 0%, #FFBB34 100%);
+      color: #3a3a3a;
+      box-shadow: 0 6px 20px rgba(255, 217, 61, 0.35);
     }
 
     .share-btn {
       background: #FFE5EC;
       color: #FF6B9D;
-      border: 2px solid rgba(255, 107, 157, 0.3);
+      border: 1.5px solid rgba(255, 107, 157, 0.3);
     }
 
     .retest-btn {
       background: linear-gradient(135deg, #6BCB77 0%, #7DD98A 100%);
       color: #ffffff;
-      box-shadow: 0 8px 24px rgba(107, 203, 119, 0.3);
+      box-shadow: 0 6px 20px rgba(107, 203, 119, 0.3);
     }
   }
 }

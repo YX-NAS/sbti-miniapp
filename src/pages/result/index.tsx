@@ -1,6 +1,6 @@
 import { View, Text, Button, ScrollView } from '@tarojs/components'
 import { useState, useEffect } from 'react'
-import Taro, { useRouter, useShareAppMessage } from '@tarojs/taro'
+import Taro, { useRouter, useShareAppMessage, useShareTimeline } from '@tarojs/taro'
 import {
   computeResult,
   getDimExplanation,
@@ -8,11 +8,13 @@ import {
 } from '../../utils/calculator'
 import { dimensionOrder, dimensionMeta } from '../../utils/data'
 import { dailyReportCheck, getOrCreateDeviceId } from '../../utils/tencentCloud'
+import SharePoster from '../../components/SharePoster/index'
 import './index.scss'
 
 export default function Result() {
   const router = useRouter()
   const [result, setResult] = useState<TestResult | null>(null)
+  const [showPoster, setShowPoster] = useState(false)
 
   useEffect(() => {
     const params = router.params
@@ -33,10 +35,20 @@ export default function Result() {
       dailyReportCheck(deviceId, result.finalType.code, result.finalType.cn)
     }
     return {
-      title: result ? `我的SBTI人格是「${result.finalType.code} ${result.finalType.cn}」` : 'SBTI 性格测试',
+      title: result
+        ? `我的SBTI人格是「${result.finalType.code} ${result.finalType.cn}」，快来测测你的！`
+        : '🌟 SBTI 性格测试 — 探索真实的自己',
       path: '/pages/index/index',
     }
   })
+
+  // 支持分享到朋友圈
+  useShareTimeline(() => ({
+    title: result
+      ? `SBTI 测出我是「${result.finalType.code} ${result.finalType.cn}」`
+      : '🌟 SBTI 性格测试',
+    query: '',
+  }))
 
   const handleRetest = () => {
     Taro.redirectTo({ url: '/pages/test/index' })
@@ -130,9 +142,22 @@ export default function Result() {
       </ScrollView>
 
       <View className="result-footer">
-        <Button className="share-btn" open-type="share">分享结果</Button>
+        <Button className="poster-btn" onClick={() => setShowPoster(true)}>🎨 生成分享图</Button>
+        <Button className="share-btn" open-type="share">发送给朋友</Button>
         <Button className="retest-btn" onClick={handleRetest}>重新测试</Button>
       </View>
     </View>
+
+    {/* 分享海报弹层 */}
+    {showPoster && result && (
+      <SharePoster
+        typeCode={result.finalType.code}
+        typeCn={result.finalType.cn}
+        typeIntro={result.finalType.intro}
+        similarity={result.bestNormal.similarity}
+        special={result.special}
+        onClose={() => setShowPoster(false)}
+      />
+    )}
   )
 }

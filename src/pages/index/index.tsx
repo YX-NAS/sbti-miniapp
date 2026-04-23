@@ -1,5 +1,5 @@
 import { View, Text, Button } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useShareAppMessage, useShareTimeline } from '@tarojs/taro'
 import './index.scss'
 
 // 功能卡片配置
@@ -52,6 +52,16 @@ const FUNCTION_CARDS = [
 ]
 
 export default function Index() {
+  useShareAppMessage(() => ({
+    title: '🌟 星座人格实验室 — 探索你的性格特质',
+    path: '/pages/index/index',
+  }))
+
+  useShareTimeline(() => ({
+    title: '🌟 星座人格实验室 — SBTI 性格测试',
+    query: '',
+  }))
+
   const handleCardClick = (path: string) => {
     Taro.navigateTo({ url: path })
   }

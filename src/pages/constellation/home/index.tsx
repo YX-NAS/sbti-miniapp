@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useShareAppMessage } from '@tarojs/taro'
 import { useState } from 'react'
 import SignSelector from '../../../components/SignSelector/index'
 import ScoreCard from '../../../components/ScoreCard/index'
@@ -34,6 +34,13 @@ export default function ConstellationHome() {
   const scores = getScores(selectedSign, selectedPeriod)
   const lucky = getLuckyInfo(selectedSign, selectedPeriod)
   const isExam = selectedPeriod === 'exam'
+
+  useShareAppMessage(() => ({
+    title: signData && fortune
+      ? `${signData.emoji} ${signData.name}今日运势 ${fortune.overallScore}分 — "${fortune.shortComment}"`
+      : '🌟 星座运势 — 看看今日星座运势',
+    path: '/pages/constellation/home/index',
+  }))
 
   const handleSignSelect = (signId: string) => {
     setSelectedSign(signId)

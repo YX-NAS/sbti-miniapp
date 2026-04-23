@@ -1,0 +1,82 @@
+// SharePoster 分享海报弹层样式
+
+.poster-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .poster-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 650rpx;
+  }
+
+  .poster-tip {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 28rpx;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  // Canvas：逻辑尺寸 630×1120，CSS 按比例 630rpx × 1120rpx
+  // 在 375px 宽屏幕上约 315×560 CSS px，形成 2x 清晰度
+  .poster-canvas {
+    width: 630rpx;
+    height: 1120rpx;
+    border-radius: 40rpx;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+    display: block;
+    background: #fff5f8; // 占位背景，绘制完成前显示
+  }
+
+  .poster-actions {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+
+    .poster-save-btn,
+    .poster-close-btn {
+      flex: 1;
+      height: 88rpx;
+      line-height: 88rpx;
+      border-radius: 44rpx;
+      font-size: 30rpx;
+      font-weight: 700;
+      border: none;
+
+      &::after {
+        border: none;
+      }
+
+      &:active {
+        opacity: 0.85;
+      }
+    }
+
+    .poster-save-btn {
+      background: linear-gradient(135deg, #FF6B9D 0%, #FF8E8E 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(255, 107, 157, 0.4);
+    }
+
+    .poster-close-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+    }
+  }
+}
