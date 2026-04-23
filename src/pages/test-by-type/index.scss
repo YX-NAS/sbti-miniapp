@@ -1,0 +1,396 @@
+// 通用按类型测试页面样式
+$theme-color: var(--theme-color, #FF6B9D);
+
+.test-container {
+  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  background: linear-gradient(160deg, #FFF5E6 0%, #FFF0F5 100%);
+  padding-top: calc(160rpx + env(safe-area-inset-top));
+  padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
+}
+
+// ======================== 顶部（固定） ========================
+.test-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(80rpx + env(safe-area-inset-top)) 32rpx 24rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: linear-gradient(160deg, #FFF5E6 0%, #FFF0F5 100%);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+
+  .back-btn {
+    width: 72rpx;
+    height: 72rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    font-size: 36rpx;
+    color: #666;
+  }
+
+  .header-info {
+    display: flex;
+    align-items: center;
+    gap: 12rpx;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .header-emoji {
+    font-size: 36rpx;
+  }
+
+  .header-title {
+    font-size: 30rpx;
+    font-weight: 600;
+    color: #5a3e2b;
+  }
+
+  .header-count {
+    font-size: 28rpx;
+    color: #aaa;
+  }
+}
+
+// ======================== 进度条 ========================
+.progress-bar {
+  height: 8rpx;
+  background: rgba(0,0,0,0.06);
+  margin: 0 32rpx;
+  border-radius: 4rpx;
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 4rpx;
+    transition: width 0.4s ease;
+  }
+}
+
+// ======================== 问题卡片 ========================
+.question-card {
+  margin: 40rpx 32rpx 32rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 48rpx 40rpx;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.06);
+
+  .q-decor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100rpx;
+    height: 100rpx;
+    background: $theme-color;
+    opacity: 0.06;
+    border-radius: 0 0 0 100%;
+  }
+
+  .q-text {
+    font-size: 34rpx;
+    color: #3a2a2a;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+}
+
+// ======================== 选项 ========================
+.options-area {
+  padding: 0 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.option-item {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx 32rpx;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  border: 3rpx solid transparent;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  transition: all 0.2s;
+  position: relative;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.selected {
+    box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.1);
+  }
+
+  .opt-label {
+    width: 56rpx;
+    height: 56rpx;
+    border-radius: 50%;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .opt-label-text {
+    font-size: 26rpx;
+    font-weight: 600;
+    color: #999;
+  }
+
+  .opt-text {
+    font-size: 30rpx;
+    color: #4a3a3a;
+    flex: 1;
+    line-height: 1.5;
+  }
+
+  .opt-check {
+    font-size: 32rpx;
+    font-weight: 700;
+  }
+}
+
+// ======================== 底部按钮 ========================
+.bottom-area {
+  padding: 24rpx 32rpx 32rpx;
+}
+
+.next-btn {
+  height: 96rpx;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &.disabled {
+    background: #e8e8e8;
+    color: #aaa;
+  }
+
+  &.active {
+    color: #fff;
+    box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.15);
+  }
+}
+
+// ======================== 结果页 ========================
+.result-card {
+  margin: 40rpx 32rpx;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 60rpx 48rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8rpx 40rpx rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+
+  .result-decor {
+    position: absolute;
+    top: -40rpx;
+    right: -40rpx;
+    width: 160rpx;
+    height: 160rpx;
+    background: $theme-color;
+    opacity: 0.06;
+    border-radius: 50%;
+  }
+
+  .result-type-tag {
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+    padding: 10rpx 24rpx;
+    border-radius: 20rpx;
+    margin-bottom: 32rpx;
+
+    .tag-emoji { font-size: 24rpx; }
+    .tag-text { font-size: 24rpx; font-weight: 600; }
+  }
+
+  .result-emoji {
+    font-size: 100rpx;
+    margin-bottom: 24rpx;
+  }
+
+  .result-title {
+    font-size: 44rpx;
+    font-weight: 700;
+    color: #3a2a2a;
+    margin-bottom: 20rpx;
+    text-align: center;
+  }
+
+  .result-desc {
+    font-size: 28rpx;
+    color: #888;
+    line-height: 1.8;
+    text-align: center;
+    margin-bottom: 40rpx;
+  }
+
+  .result-stats {
+    display: flex;
+    align-items: center;
+    gap: 40rpx;
+    margin-bottom: 40rpx;
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat-num {
+      font-size: 48rpx;
+      font-weight: 700;
+      color: $theme-color;
+    }
+
+    .stat-label {
+      font-size: 22rpx;
+      color: #aaa;
+      margin-top: 4rpx;
+    }
+
+    .stat-divider {
+      width: 2rpx;
+      height: 60rpx;
+      background: #eee;
+    }
+  }
+
+  .action-row {
+    display: flex;
+    gap: 24rpx;
+    width: 100%;
+
+    .action-btn {
+      flex: 1;
+      height: 88rpx;
+      border-radius: 44rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30rpx;
+      font-weight: 600;
+    }
+
+    .home-btn {
+      background: #f5f5f5;
+      color: #666;
+    }
+
+    .retest-btn {
+      background: $theme-color;
+      color: #fff;
+    }
+  }
+}
+
+// ======================== Loading ========================
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  .loading-text { font-size: 30rpx; color: #aaa; }
+}
+
+// ======================== 付费解锁页 ========================
+.paywall-card {
+  margin: 80rpx 48rpx;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 64rpx 48rpx 56rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8rpx 40rpx rgba(0,0,0,0.08);
+
+  .paywall-icon {
+    font-size: 96rpx;
+    margin-bottom: 24rpx;
+  }
+
+  .paywall-title {
+    font-size: 48rpx;
+    font-weight: 700;
+    color: #FF8C7A;
+    margin-bottom: 16rpx;
+  }
+
+  .paywall-desc {
+    font-size: 28rpx;
+    color: #888;
+    line-height: 1.8;
+    text-align: center;
+    margin-bottom: 32rpx;
+  }
+
+  .paywall-divider {
+    width: 100%;
+    height: 2rpx;
+    background: #f0f0f0;
+    margin-bottom: 32rpx;
+  }
+
+  .paywall-price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 36rpx;
+
+    .price-tag {
+      font-size: 36rpx;
+      font-weight: 700;
+      color: #FF6B9D;
+      margin-bottom: 8rpx;
+    }
+
+    .price-method {
+      font-size: 26rpx;
+      color: #aaa;
+    }
+  }
+
+  .paywall-btn {
+    width: 100%;
+    height: 96rpx;
+    background: linear-gradient(135deg, #FF8C7A 0%, #FF6B9D 100%);
+    border-radius: 48rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8rpx 24rpx rgba(255,140,122,0.35);
+    margin-bottom: 20rpx;
+
+    .paywall-btn-text {
+      font-size: 34rpx;
+      font-weight: 700;
+      color: #fff;
+    }
+  }
+
+  .paywall-tip {
+    font-size: 22rpx;
+    color: #ccc;
+  }
+}
