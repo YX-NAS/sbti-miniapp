@@ -120,6 +120,18 @@
     }
   }
 
+  .test-note {
+    margin-bottom: 20px;
+    padding: 0 8px;
+
+    .test-note-text {
+      display: block;
+      font-size: 24rpx;
+      color: #8a7a8a;
+      text-align: center;
+    }
+  }
+
   // 进度条 - 可爱风
   .progress-wrapper {
     padding: 16px 20px 10px;

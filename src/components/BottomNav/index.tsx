@@ -17,6 +17,10 @@ export default function BottomNav() {
         <Text className="nav-icon">🧪</Text>
         <Text className="nav-label">CP配对</Text>
       </Navigator>
+      <Navigator url="/pages/history/index" className="nav-item">
+        <Text className="nav-icon">📋</Text>
+        <Text className="nav-label">测试记录</Text>
+      </Navigator>
       <Navigator url="/pages/constellation/home/index" className="nav-item">
         <Text className="nav-icon">🔮</Text>
         <Text className="nav-label">星座查询</Text>

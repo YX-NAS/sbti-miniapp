@@ -6,7 +6,7 @@ import {
   getDimExplanation,
   type TestResult
 } from '../../utils/calculator'
-import { dimensionOrder, dimensionMeta } from '../../utils/data'
+import { dimensionOrder, dimensionMeta } from '../../utils/campusData'
 import { dailyReportCheck, getOrCreateDeviceId } from '../../utils/tencentCloud'
 import { trackEvent } from '../../utils/analytics'
 import SharePoster from '../../components/SharePoster/index'
@@ -38,8 +38,8 @@ export default function Result() {
     }
     return {
       title: result
-        ? `我的SBTI人格是「${result.finalType.code} ${result.finalType.cn}」，快来测测你的！`
-        : '🌟 SBTI 性格测试 — 探索真实的自己',
+        ? `我的校园人格类型是「${result.finalType.code} ${result.finalType.cn}」，快来测测你的！`
+        : '🌟 校园人格类型测试 — 看看你的校园画像',
       path: '/pages/index/index',
     }
   })
@@ -52,8 +52,8 @@ export default function Result() {
 
     return {
       title: result
-        ? `SBTI 测出我是「${result.finalType.code} ${result.finalType.cn}」`
-        : '🌟 SBTI 性格测试',
+        ? `校园人格类型测出我是「${result.finalType.code} ${result.finalType.cn}」`
+        : '🌟 校园人格类型测试',
       query: '',
     }
   })
@@ -85,12 +85,13 @@ export default function Result() {
 
   const shareCopyLines = [
     `${result.finalType.code} ${result.finalType.cn}｜${result.badge}`,
-    `朋友说这个结果像我本人，快来测测你是哪一型`,
+    `朋友说这个结果挺像我，快来测测你是哪一型`,
     `测完顺手发群里，看看谁和我最像`,
   ]
 
   return (
-    <View className="result-container">
+    <>
+      <View className="result-container">
       <ScrollView className="result-scroll" scrollY>
         {/* 顶部人格卡片 */}
         <View className="type-card">
@@ -109,6 +110,10 @@ export default function Result() {
         <View className="card desc-card">
           <Text className="card-title">人格解读</Text>
           <Text className="desc-text">{result.finalType.desc}</Text>
+        </View>
+
+        <View className="card disclaimer-card">
+          <Text className="disclaimer-text">仅供娱乐与自我观察参考</Text>
         </View>
 
         <View className="card share-guide-card">
@@ -180,7 +185,7 @@ export default function Result() {
           <View className="growth-actions">
             <View className="growth-action-btn topic-action" onClick={() => handleExplore('/pages/test-type/index', 'topic-tests')}>
               <Text className="growth-action-title">学生专题快测</Text>
-              <Text className="growth-action-desc">宿舍 / 暗恋 / 学习 / 趣味</Text>
+              <Text className="growth-action-desc">宿舍 / 暗恋 / 学习 / 趣味 / CatTi</Text>
             </View>
             <View className="growth-action-btn daily-action" onClick={() => handleExplore('/pages/daily-test/index', 'daily-test')}>
               <Text className="growth-action-title">今日一测</Text>
@@ -197,18 +202,19 @@ export default function Result() {
         <Button className="share-btn" open-type="share">晒给朋友</Button>
         <Button className="retest-btn" onClick={handleRetest}>重新测试</Button>
       </View>
-    </View>
+      </View>
 
-    {/* 分享海报弹层 */}
-    {showPoster && result && (
-      <SharePoster
-        typeCode={result.finalType.code}
-        typeCn={result.finalType.cn}
-        typeIntro={result.finalType.intro}
-        similarity={result.bestNormal.similarity}
-        special={result.special}
-        onClose={() => setShowPoster(false)}
-      />
-    )}
+      {/* 分享海报弹层 */}
+      {showPoster && result && (
+        <SharePoster
+          typeCode={result.finalType.code}
+          typeCn={result.finalType.cn}
+          typeIntro={result.finalType.intro}
+          similarity={result.bestNormal.similarity}
+          special={result.special}
+          onClose={() => setShowPoster(false)}
+        />
+      )}
+    </>
   )
 }

@@ -1,7 +1,20 @@
 import { View, Text, Button } from '@tarojs/components'
-import Taro, { useShareAppMessage, useShareTimeline } from '@tarojs/taro'
+import { useEffect, useState, type CSSProperties } from 'react'
+import Taro, { useDidShow, useShareAppMessage, useShareTimeline } from '@tarojs/taro'
 import { trackEvent } from '../../utils/analytics'
+import { getHomePageContent } from '../../utils/contentConfig'
 import './index.scss'
+
+const FIREWORK_UNLOCK_TAP_COUNT = 6
+const FIREWORK_DURATION = 3000
+const FIREWORKS = [
+  { id: 'firework-1', top: '20%', left: '18%', color: '#FF6B9D', delay: '0s' },
+  { id: 'firework-2', top: '28%', left: '74%', color: '#FFD93D', delay: '0.3s' },
+  { id: 'firework-3', top: '42%', left: '48%', color: '#5B7CFA', delay: '0.55s' },
+  { id: 'firework-4', top: '58%', left: '24%', color: '#6BCB77', delay: '0.9s' },
+  { id: 'firework-5', top: '64%', left: '78%', color: '#B784E8', delay: '1.15s' },
+  { id: 'firework-6', top: '48%', left: '84%', color: '#FF8C7A', delay: '1.4s' },
+]
 
 // 功能卡片配置
 const FUNCTION_CARDS = [
@@ -52,59 +65,32 @@ const FUNCTION_CARDS = [
   },
 ]
 
-const HOT_TESTS = [
-  {
-    id: 'hot-char',
-    emoji: '🏠',
-    title: '宿舍气场测试',
-    desc: '4题看你在宿舍里是哪种存在',
-    tag: '学生热门',
-    color: '#FF6B9D',
-    path: '/pages/test-by-type/index?type=char',
-  },
-  {
-    id: 'hot-love',
-    emoji: '💘',
-    title: '暗恋反应测试',
-    desc: '心动时你到底有多明显',
-    tag: '适合分享',
-    color: '#FF8C7A',
-    path: '/pages/test-by-type/index?type=love',
-  },
-  {
-    id: 'hot-study',
-    emoji: '📚',
-    title: '考前状态测试',
-    desc: '看看你属于哪种复习节奏',
-    tag: '考前必测',
-    color: '#4D96FF',
-    path: '/pages/test-by-type/index?type=study',
-  },
-]
-
-const FEATURE_TOPICS = [
-  {
-    id: 'topic-center',
-    title: '学生专题快测',
-    desc: '宿舍 / 暗恋 / 学习 / 趣味',
-    path: '/pages/test-type/index',
-  },
-  {
-    id: 'topic-daily',
-    title: '今日一测',
-    desc: '每天一道，适合发朋友和群聊',
-    path: '/pages/daily-test/index',
-  },
-]
-
 export default function Index() {
+  const [pageContent, setPageContent] = useState(() => getHomePageContent())
+  const [titleTapCount, setTitleTapCount] = useState(0)
+  const [showFireworks, setShowFireworks] = useState(false)
+
+  useDidShow(() => {
+    setPageContent(getHomePageContent())
+  })
+
+  useEffect(() => {
+    if (!showFireworks) return
+
+    const timer = setTimeout(() => {
+      setShowFireworks(false)
+    }, FIREWORK_DURATION)
+
+    return () => clearTimeout(timer)
+  }, [showFireworks])
+
   useShareAppMessage(() => ({
     title: '🌟 星座人格实验室 — 探索你的性格特质',
     path: '/pages/index/index',
   }))
 
   useShareTimeline(() => ({
-    title: '🌟 星座人格实验室 — SBTI 性格测试',
+    title: '🌟 星座人格实验室 — 校园人格类型测试',
     query: '',
   }))
 
@@ -118,8 +104,47 @@ export default function Index() {
     Taro.navigateTo({ url: '/pages/test/index' })
   }
 
+  const handleHeaderTap = () => {
+    if (showFireworks) return
+
+    const nextCount = titleTapCount + 1
+    setTitleTapCount(nextCount)
+
+    if (nextCount < FIREWORK_UNLOCK_TAP_COUNT) {
+      trackEvent('home_title_tap', { step: nextCount })
+      return
+    }
+
+    setTitleTapCount(0)
+    setShowFireworks(true)
+    trackEvent('home_fireworks_triggered', { trigger: 'title-tap' })
+  }
+
   return (
     <View className="index-container">
+      {showFireworks && (
+        <View className="fireworks-overlay">
+          <View className="fireworks-mask" />
+          {FIREWORKS.map(firework => (
+            <View
+              key={firework.id}
+              className="firework-burst"
+              style={{
+                top: firework.top,
+                left: firework.left,
+                '--firework-color': firework.color,
+                '--firework-delay': firework.delay,
+              } as CSSProperties}
+            >
+              <View className="firework-core" />
+              {Array.from({ length: 8 }).map((_, index) => (
+                <View key={`${firework.id}-${index}`} className={`firework-particle particle-${index + 1}`} />
+              ))}
+            </View>
+          ))}
+        </View>
+      )}
+
       {/* 顶部装饰 */}
       <View className="top-decor">
         <View className="decor-circle circle-1" />
@@ -128,7 +153,7 @@ export default function Index() {
 
       {/* 顶部 Banner */}
       <View className="header">
-        <Text className="header-title">🌟 星座人格实验室</Text>
+        <Text className="header-title" onClick={handleHeaderTap}>🌟 星座人格实验室</Text>
         <Text className="header-subtitle">了解自己，探索世界</Text>
       </View>
 
@@ -176,10 +201,9 @@ export default function Index() {
       <View className="section-block">
         <View className="section-heading">
           <Text className="section-title">🔥 本周热门</Text>
-          <Text className="section-desc">第一阶段重点主推的学生场景测试</Text>
         </View>
         <View className="hot-test-list">
-          {HOT_TESTS.map(item => (
+          {pageContent.hotTests.map(item => (
             <View
               key={item.id}
               className="hot-test-card"
@@ -201,10 +225,9 @@ export default function Index() {
       <View className="section-block">
         <View className="section-heading">
           <Text className="section-title">🎒 学生专题</Text>
-          <Text className="section-desc">更适合发给同学和朋友的快测入口</Text>
         </View>
         <View className="topic-grid">
-          {FEATURE_TOPICS.map(item => (
+          {pageContent.featureTopics.map(item => (
             <View
               key={item.id}
               className="topic-card"
@@ -218,7 +241,7 @@ export default function Index() {
         </View>
       </View>
 
-      {/* SBTI 专区 */}
+      {/* 校园人格专区 */}
       <View className="sbti-section">
         <View className="sbti-card">
           <View className="sbti-decor sbti-decor-left" />
@@ -226,12 +249,12 @@ export default function Index() {
           <View className="sbti-card-content">
             <Text className="sbti-icon">🔮</Text>
             <View className="sbti-text-group">
-              <Text className="sbti-title">SBTI 性格测试</Text>
-              <Text className="sbti-desc">探索你的性格特质，发现真实的自己</Text>
+              <Text className="sbti-title">校园人格类型测试</Text>
+              <Text className="sbti-desc">从学习、社交和关系节奏里看看你的校园画像</Text>
               <View className="sbti-tags">
                 <Text className="sbti-tag">共31道题</Text>
                 <Text className="sbti-tag">约5分钟</Text>
-                <Text className="sbti-tag">26种人格</Text>
+                <Text className="sbti-tag">仅供娱乐与自我观察参考</Text>
               </View>
             </View>
           </View>
@@ -239,6 +262,10 @@ export default function Index() {
             开始测试
           </Button>
         </View>
+      </View>
+
+      <View className="page-footer">
+        <Text className="footer-text">Copyright © 2026 星座人格实验室</Text>
       </View>
     </View>
   )

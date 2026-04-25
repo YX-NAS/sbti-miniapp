@@ -1,5 +1,5 @@
-import { View, Text, Navigator } from '@tarojs/components'
-import Taro, { useRouter, useShareAppMessage, useShareTimeline } from '@tarojs/taro'
+import { View, Text, Navigator, Button } from '@tarojs/components'
+import Taro, { useDidShow, useRouter, useShareAppMessage, useShareTimeline } from '@tarojs/taro'
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import BottomNav from '../../components/BottomNav'
 import {
@@ -15,17 +15,24 @@ import './index.scss'
 type AnswerMap = Record<string, TopicResultKey>
 
 const PAGE_KEY = 'topic_test'
+const CATTI_UNLOCK_KEY = 'topic_test_cat_unlocked'
 
 export default function TestByType() {
   const router = useRouter()
   const rawType = (router.params.type || 'char') as TopicTestType
   const type = rawType in TOPIC_TEST_CONFIG ? rawType : 'char'
   const cfg = TOPIC_TEST_CONFIG[type]
+  const isCatTi = type === 'cat'
+  const fullTestPath = cfg.fullPath
+  const fullTestTitle = cfg.fullTitle || '完整版测试'
+  const fullTestUnlockKey = `${PAGE_KEY}_${type}_full_unlocked`
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<AnswerMap>({})
   const [selected, setSelected] = useState<TopicResultKey | null>(null)
   const [finished, setFinished] = useState(false)
+  const [isUnlocked, setIsUnlocked] = useState(!isCatTi)
+  const [fullTestUnlocked, setFullTestUnlocked] = useState(!fullTestPath)
 
   const questions = useMemo(
     () => TOPIC_QUESTIONS.filter(question => question.type === type).slice(0, cfg.count),
@@ -36,7 +43,17 @@ export default function TestByType() {
   const total = questions.length
   const progress = total > 0 ? ((currentIndex + 1) / total) * 100 : 0
 
+  const syncUnlockState = () => {
+    const unlocked = !isCatTi || Boolean(Taro.getStorageSync(CATTI_UNLOCK_KEY))
+    const fullUnlocked = !fullTestPath || Boolean(Taro.getStorageSync(fullTestUnlockKey))
+    setIsUnlocked(unlocked)
+    setFullTestUnlocked(fullUnlocked)
+    return { unlocked, fullUnlocked }
+  }
+
   useEffect(() => {
+    const { unlocked, fullUnlocked } = syncUnlockState()
+
     const savedAnswers = Taro.getStorageSync(`${PAGE_KEY}_${type}_answers`) as AnswerMap | undefined
     const savedIndex = Taro.getStorageSync(`${PAGE_KEY}_${type}_index`) as number | undefined
 
@@ -50,8 +67,15 @@ export default function TestByType() {
 
     setSelected(null)
     setFinished(false)
-    trackEvent('topic_test_opened', { type })
-  }, [type])
+    if (isCatTi || fullTestPath) {
+      Taro.showShareMenu({ withShareTicket: false, showShareItems: ['shareAppMessage'] })
+    }
+    trackEvent('topic_test_opened', { type, unlocked, fullUnlocked })
+  }, [fullTestPath, fullTestUnlockKey, isCatTi, type])
+
+  useDidShow(() => {
+    syncUnlockState()
+  })
 
   useEffect(() => {
     if (questions.length > 0) {
@@ -89,13 +113,37 @@ export default function TestByType() {
     }
   }, [answers, finished, type])
 
-  useShareAppMessage(() => {
+  const unlockCatTi = (channel: 'friend' | 'group') => {
+    if (!isCatTi || isUnlocked) return
+    Taro.setStorageSync(CATTI_UNLOCK_KEY, true)
+    setIsUnlocked(true)
+    trackEvent('topic_test_unlocked', { type, channel })
+    Taro.showToast({ title: 'CatTi 已解锁', icon: 'success' })
+  }
+
+  const unlockFullTest = (channel: 'friend' | 'group') => {
+    if (!fullTestPath || fullTestUnlocked) return
+    Taro.setStorageSync(fullTestUnlockKey, true)
+    setFullTestUnlocked(true)
+    trackEvent('topic_test_full_unlocked', { type, channel, path: fullTestPath })
+    Taro.showToast({ title: '完整版已解锁', icon: 'success' })
+  }
+
+  useShareAppMessage(res => {
+    if (isCatTi && !isUnlocked && res.from === 'button') {
+      unlockCatTi('friend')
+    }
+
     if (finalResult) {
       trackEvent('topic_test_shared', { type, result: finalResult.meta.title, channel: 'friend' })
     }
 
     return {
-      title: finalResult
+      title: isCatTi && !isUnlocked
+        ? `${cfg.emoji} 分享后解锁 CatTi，看看你像哪种校园猫`
+        : fullTestPath && !fullTestUnlocked
+        ? `${cfg.emoji} 分享后解锁${fullTestTitle}，看看你的完整结果`
+        : finalResult
         ? `${cfg.emoji} 我测出是「${finalResult.meta.title}」｜${cfg.title}`
         : `${cfg.emoji} ${cfg.title}：${cfg.subtitle}`,
       path: `/pages/test-by-type/index?type=${type}`,
@@ -146,11 +194,57 @@ export default function TestByType() {
     trackEvent('topic_test_retested', { type })
   }
 
+  const handleOpenFullTest = () => {
+    if (!fullTestPath || !fullTestUnlocked) return
+    trackEvent('topic_test_full_open_click', { type, path: fullTestPath })
+    Taro.navigateTo({ url: fullTestPath })
+  }
+
   if (questions.length === 0) {
     return (
       <View className="test-container">
         <View className="loading">
           <Text className="loading-text">正在准备题目...</Text>
+        </View>
+      </View>
+    )
+  }
+
+  if (isCatTi && !isUnlocked) {
+    return (
+      <View className="test-container" style={{ '--theme-color': cfg.color } as CSSProperties}>
+        <View className="test-header">
+          <Navigator url="/pages/test-type/index" className="back-btn">
+            <Text>←</Text>
+          </Navigator>
+          <View className="header-info">
+            <Text className="header-emoji">{cfg.emoji}</Text>
+            <Text className="header-title">{cfg.title}</Text>
+          </View>
+          <Text className="header-count">待解锁</Text>
+        </View>
+
+        <View className="lock-card">
+          <View className="lock-badge" style={{ background: `${cfg.color}18`, color: cfg.color }}>
+            <Text className="lock-badge-text">分享解锁</Text>
+          </View>
+          <Text className="lock-emoji">🐾</Text>
+          <Text className="lock-title">分享好友或群组后解锁 CatTi</Text>
+          <Text className="lock-desc">分享成功一次后，这个测试会一直保持解锁状态，不会再次锁定。</Text>
+          <Text className="lock-note">仅供娱乐与自我观察参考</Text>
+
+          <Button
+            className="lock-share-btn"
+            open-type="share"
+            style={{ background: cfg.color }}
+            onClick={() => trackEvent('topic_test_unlock_share_click', { type })}
+          >
+            立即分享解锁
+          </Button>
+
+          <Navigator url="/pages/test-type/index" className="lock-back-btn">
+            <Text>先看看其他测试</Text>
+          </Navigator>
         </View>
       </View>
     )
@@ -169,6 +263,7 @@ export default function TestByType() {
           <Text className="result-emoji">{finalResult.meta.emoji}</Text>
           <Text className="result-title">{finalResult.meta.title}</Text>
           <Text className="result-desc">{finalResult.meta.desc}</Text>
+          <Text className="result-note">仅供娱乐与自我观察参考</Text>
 
           <View className="result-stats">
             <View className="stat-item">
@@ -185,6 +280,33 @@ export default function TestByType() {
           <View className="share-tip">
             <Text className="share-tip-text">把结果发给同学试试看，看看谁和你最像 👀</Text>
           </View>
+
+          {fullTestPath && (
+            <View className="upgrade-card">
+              <Text className="upgrade-title">想看更完整的倾向结果？</Text>
+              <Text className="upgrade-desc">当前是 4 题快测，更适合快速感受自己的状态。进入 {fullTestTitle} 前需要先分享解锁，解锁后可长期直接进入。</Text>
+              {fullTestUnlocked ? (
+                <>
+                  <Text className="upgrade-status">已解锁，可直接进入</Text>
+                  <View className="upgrade-btn" style={{ background: cfg.color }} onClick={handleOpenFullTest}>
+                    <Text className="upgrade-btn-text">进入完整版</Text>
+                  </View>
+                </>
+              ) : (
+                <Button
+                  className="upgrade-share-btn"
+                  open-type="share"
+                  style={{ background: cfg.color }}
+                  onClick={() => {
+                    trackEvent('topic_test_full_share_click', { type, path: fullTestPath })
+                    unlockFullTest('friend')
+                  }}
+                >
+                  分享后解锁完整版
+                </Button>
+              )}
+            </View>
+          )}
 
           <View className="action-row">
             <Navigator url="/pages/test-type/index" className="action-btn home-btn">
@@ -218,6 +340,7 @@ export default function TestByType() {
 
       <View className="intro-tip">
         <Text className="intro-tip-text">{cfg.subtitle}</Text>
+        <Text className="intro-note-text">仅供娱乐与自我观察参考</Text>
       </View>
 
       <View className="question-card">

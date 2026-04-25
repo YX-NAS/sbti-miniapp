@@ -2,7 +2,7 @@ import { View, Text, Button, ScrollView } from '@tarojs/components'
 import { useState, useEffect } from 'react'
 import Taro, { useDidShow } from '@tarojs/taro'
 import { buildShuffledQuestions, getVisibleQuestions } from '../../utils/calculator'
-import type { Question } from '../../utils/data'
+import type { Question } from '../../utils/campusData'
 import './index.scss'
 
 type AnswerMap = Record<string, number>
@@ -90,6 +90,10 @@ export default function Test() {
             )}
           </View>
           <Text className="question-text">{currentQuestion.text}</Text>
+        </View>
+
+        <View className="test-note">
+          <Text className="test-note-text">仅供娱乐与自我观察参考</Text>
         </View>
 
         <View className="options-container">

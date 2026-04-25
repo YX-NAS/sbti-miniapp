@@ -157,6 +157,17 @@
     }
   }
 
+  .disclaimer-card {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .disclaimer-text {
+      font-size: 24rpx;
+      color: #8A7A8A;
+      text-align: center;
+    }
+  }
+
   // 15维度 - 可爱风
   .dims-card {
     .dim-item {

@@ -134,7 +134,7 @@ function drawPoster(
   // ── 副标题 ────────────────────────────────────────
   ctx.fillStyle = '#9a8a9a'
   ctx.font = '26px sans-serif'
-  ctx.fillText('我的 SBTI 人格类型', W / 2, 150)
+  ctx.fillText('我的校园人格类型', W / 2, 150)
 
   // ── 人格 Code（大字）─────────────────────────────
   ctx.fillStyle = '#FF6B9D'
@@ -180,7 +180,7 @@ function drawPoster(
   ctx.textBaseline = 'middle'
   const badgeText = special
     ? '✨ 隐藏人格已解锁'
-    : `匹配度 ${similarity}%  ·  SBTI 性格测试`
+    : `匹配度 ${similarity}%  ·  校园人格类型测试`
   ctx.fillText(badgeText, W / 2, badgeY - 6)
 
   // ── 底部 CTA ──────────────────────────────────────
@@ -197,14 +197,14 @@ function drawPoster(
   ctx.font = 'bold 30px sans-serif'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
-  ctx.fillText('扫码探索你的性格 →', W / 2, 914)
+  ctx.fillText('扫码看看你的校园画像 →', W / 2, 914)
 
   // ── 底部版权 ──────────────────────────────────────
   ctx.fillStyle = '#c8b8c8'
   ctx.font = '22px sans-serif'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
-  ctx.fillText('星座人格实验室 · 仅供娱乐参考', W / 2, 1078)
+  ctx.fillText('星座人格实验室 · 仅供娱乐与自我观察参考', W / 2, 1078)
 }
 
 // ─── 组件 ─────────────────────────────────────────────────────────────────────

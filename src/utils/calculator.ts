@@ -7,8 +7,8 @@ import {
   TYPE_LIBRARY,
   NORMAL_TYPES,
   DIM_EXPLANATIONS
-} from './data';
-import type { Question } from './data';
+} from './campusData';
+import type { Question } from './campusData';
 
 export type Level = 'L' | 'M' | 'H';
 
@@ -142,15 +142,15 @@ export function computeResult(
   if (drunkTriggered) {
     finalType = TYPE_LIBRARY.DRUNK;
     secondaryType = bestNormal;
-    modeKicker = '隐藏人格已激活';
-    badge = '匹配度 100% · 酒精异常因子已接管';
-    sub = '乙醇亲和性过强，系统已直接跳过常规人格审判。';
+    modeKicker = '夜行模式已激活';
+    badge = '匹配度 100% · 隐藏节奏画像已解锁';
+    sub = '你的作息和能量分布更偏向夜间模式，因此系统补充了一层深夜状态画像。';
     special = true;
   } else if (bestNormal.similarity < 60) {
     finalType = TYPE_LIBRARY.HHHH;
-    modeKicker = '系统强制兜底';
-    badge = `标准人格库最高匹配仅 ${bestNormal.similarity}%`;
-    sub = '标准人格库对你的脑回路集体罢工了，于是系统把你强制分配给了 HHHH。';
+    modeKicker = '多维画像触发';
+    badge = `最高匹配度 ${bestNormal.similarity}%`;
+    sub = '你的特征分布比较均衡，因此结果更适合按“多维探索”来理解，而不是被单一标签定义。';
     special = true;
   } else {
     finalType = bestNormal;

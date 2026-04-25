@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: 'SBTI性格测试'
+  navigationBarTitleText: '校园人格类型测试'
 }

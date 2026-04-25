@@ -11,6 +11,37 @@
   padding: 80px 40px 32px;
   text-align: center;
 
+  .header-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .home-btn,
+  .admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    height: 60px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 18px rgba(80, 89, 140, 0.08);
+  }
+
+  .home-btn-text,
+  .admin-btn-text {
+    font-size: 24rpx;
+    font-weight: 700;
+    color: #4E5C9A;
+  }
+
+  .header-action-placeholder {
+    width: 160px;
+    height: 60px;
+  }
+
   .page-title {
     display: block;
     font-size: 52rpx;
@@ -19,30 +50,18 @@
     letter-spacing: 2px;
     margin-bottom: 12px;
   }
-
-  .page-subtitle {
-    display: block;
-    font-size: 28rpx;
-    color: #6A6A8A;
-    letter-spacing: 1px;
-  }
 }
 
 .section-title-row {
   padding: 12px 32px 18px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: baseline;
 
   .section-title {
     font-size: 30rpx;
     font-weight: 800;
     color: #2A2A3A;
-  }
-
-  .section-subtitle {
-    font-size: 22rpx;
-    color: #8A8AAA;
   }
 }
 
@@ -116,18 +135,6 @@
     font-size: 22rpx;
     color: #5A5A7A;
     font-weight: 600;
-    letter-spacing: 1px;
-  }
-}
-
-// ==================== 底部提示 ====================
-.bottom-tip {
-  padding: 40px 32px 0;
-  text-align: center;
-
-  .tip-text {
-    font-size: 26rpx;
-    color: #9A9ABA;
     letter-spacing: 1px;
   }
 }

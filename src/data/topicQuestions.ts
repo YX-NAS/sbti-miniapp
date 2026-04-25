@@ -1,4 +1,4 @@
-export type TopicTestType = 'char' | 'love' | 'fun' | 'study'
+export type TopicTestType = 'char' | 'love' | 'fun' | 'study' | 'cat' | 'tendency'
 export type TopicResultKey = 'A' | 'B' | 'C' | 'D'
 
 export type TopicQuestion = {
@@ -26,6 +26,8 @@ export const TOPIC_TEST_CONFIG: Record<
     emoji: string
     color: string
     count: number
+    fullPath?: string
+    fullTitle?: string
   }
 > = {
   char: {
@@ -55,6 +57,24 @@ export const TOPIC_TEST_CONFIG: Record<
     emoji: '📚',
     color: '#4D96FF',
     count: 4,
+  },
+  cat: {
+    title: 'CatTi 猫系人格测试',
+    subtitle: '看看你像校园里的哪种猫',
+    emoji: '🐱',
+    color: '#9C7BFF',
+    count: 4,
+    fullPath: '/pages/catti-full/index?autoStart=1',
+    fullTitle: 'CatTi 完整版',
+  },
+  tendency: {
+    title: '学生人格倾向快测',
+    subtitle: '4题先看看你更偏向哪种表达与思考节奏',
+    emoji: '🧭',
+    color: '#5B7CFA',
+    count: 4,
+    fullPath: '/pages/student-tendency/index?autoStart=1',
+    fullTitle: '学生人格倾向完整版',
   },
 }
 
@@ -161,6 +181,58 @@ export const TOPIC_RESULT_META: Record<TopicTestType, Record<TopicResultKey, Top
       desc: '你对“哪些内容最值得学”有很强判断力，擅长快速抓重点。你不一定花最多时间，但往往能把有限精力用在刀刃上。',
       emoji: '🎯',
       shareTitle: '抓重点很准',
+    },
+  },
+  cat: {
+    A: {
+      title: '橘猫社交型',
+      desc: '你身上有很强的亲和力和热场能力，进入新环境时也能较快和人建立轻松互动。你像校园里那只走哪都能混熟的橘猫，松弛又有存在感。',
+      emoji: '🐯',
+      shareTitle: '像会主动贴贴的橘猫',
+    },
+    B: {
+      title: '黑猫观察型',
+      desc: '你不会一上来就把自己摊开，而是更喜欢先看清气氛和人再决定怎么靠近。你像一只警觉但很有判断力的黑猫，安静时也自带锋芒。',
+      emoji: '🐈‍⬛',
+      shareTitle: '像安静有边界的黑猫',
+    },
+    C: {
+      title: '布偶陪伴型',
+      desc: '你擅长给人稳定和温柔的陪伴，和你待在一起会很容易放松下来。你像一只情绪稳定的布偶猫，不吵闹，但非常有治愈感。',
+      emoji: '🤍',
+      shareTitle: '像很会陪伴的布偶猫',
+    },
+    D: {
+      title: '奶猫黏人型',
+      desc: '你对熟悉的人会迅速变得柔软、热情又有依赖感，喜欢在关系里得到明确回应。你像一只对安全感需求很高的小奶猫，越被认真对待越会亮起来。',
+      emoji: '🐾',
+      shareTitle: '像会认人的奶猫',
+    },
+  },
+  tendency: {
+    A: {
+      title: '主动表达倾向',
+      desc: '你当前更容易在校园关系里先迈出第一步，偏向把想法说出来，也更愿意主动带动气氛。这更像是一种阶段性倾向，不代表你在所有场景里都会一直外放。',
+      emoji: '🌟',
+      shareTitle: '当前更偏主动表达',
+    },
+    B: {
+      title: '沉静观察倾向',
+      desc: '你当前更习惯先观察人和气氛，再决定怎样靠近。你对边界、节奏和安全感会更敏感，这更像你现在的相处方式，不是对性格下定论。',
+      emoji: '🌙',
+      shareTitle: '当前更偏沉静观察',
+    },
+    C: {
+      title: '共情陪伴倾向',
+      desc: '你在关系里更容易优先感受他人的状态，愿意做稳定情绪和照顾节奏的人。这样的结果更偏向“你最近的互动倾向”，适合继续看完整版了解细分维度。',
+      emoji: '🤝',
+      shareTitle: '当前更偏共情陪伴',
+    },
+    D: {
+      title: '探索思考倾向',
+      desc: '你更容易从想法、逻辑和可能性切入问题，对新观点和新玩法也更敏感。它反映的是你当前更常出现的思考路径，不代表你只能是这一种样子。',
+      emoji: '🚀',
+      shareTitle: '当前更偏探索思考',
     },
   },
 }
@@ -340,6 +412,94 @@ export const TOPIC_QUESTIONS: TopicQuestion[] = [
       { label: 'B', text: '切成几个固定小节，按部就班完成' },
       { label: 'C', text: '拉一个搭子一起打卡' },
       { label: 'D', text: '直接挑最重要的内容硬核推进' },
+    ],
+  },
+  {
+    id: 'cat_001',
+    type: 'cat',
+    question: '到了一个陌生但看起来还不错的教室或社团活动，你通常会？',
+    options: [
+      { label: 'A', text: '主动和身边人搭话，很快熟起来' },
+      { label: 'B', text: '先找个舒服位置，观察一圈再说' },
+      { label: 'C', text: '会先照顾周围人的状态，气氛稳了再融入' },
+      { label: 'D', text: '更想靠近一个让你有安全感的人' },
+    ],
+  },
+  {
+    id: 'cat_002',
+    type: 'cat',
+    question: '朋友来找你贴贴、聊天或一起待着时，你更像哪种猫咪反应？',
+    options: [
+      { label: 'A', text: '来吧来吧，我本来就喜欢热闹' },
+      { label: 'B', text: '要看当下状态，不是谁都能立刻靠近' },
+      { label: 'C', text: '会陪着对方，让对方先放松下来' },
+      { label: 'D', text: '只对熟人明显黏人，陌生人不行' },
+    ],
+  },
+  {
+    id: 'cat_003',
+    type: 'cat',
+    question: '如果今天情绪不太稳，你最可能的自我恢复方式是？',
+    options: [
+      { label: 'A', text: '去找朋友聊聊，越聊越能回状态' },
+      { label: 'B', text: '先自己待会儿，不想被打扰' },
+      { label: 'C', text: '找一个安静角落慢慢整理，再回来陪大家' },
+      { label: 'D', text: '想找最信任的人确认一下“我还好吗”' },
+    ],
+  },
+  {
+    id: 'cat_004',
+    type: 'cat',
+    question: '别人通常会觉得你更像哪种“校园猫咪”？',
+    options: [
+      { label: 'A', text: '走哪都能混熟、很有亲近感' },
+      { label: 'B', text: '有边界感，不轻易靠近但很有个性' },
+      { label: 'C', text: '温柔耐心，待着就很让人安心' },
+      { label: 'D', text: '熟了之后特别软，也很会表达依赖' },
+    ],
+  },
+  {
+    id: 'tendency_001',
+    type: 'tendency',
+    question: '小组讨论刚开始时，你通常更接近哪种状态？',
+    options: [
+      { label: 'A', text: '会主动开口，把大家带进讨论里' },
+      { label: 'B', text: '先听几轮，等自己判断清楚再说' },
+      { label: 'C', text: '会先照顾气氛，让每个人都能接得上' },
+      { label: 'D', text: '更想先理清思路，找出最有意思的切入点' },
+    ],
+  },
+  {
+    id: 'tendency_002',
+    type: 'tendency',
+    question: '面对突然出现的新活动或新机会，你第一反应更像是？',
+    options: [
+      { label: 'A', text: '先去试试看，边参与边调整' },
+      { label: 'B', text: '先观察清楚值不值得投入' },
+      { label: 'C', text: '会优先考虑它对身边人的影响' },
+      { label: 'D', text: '会先想它有没有新的可能性或玩法' },
+    ],
+  },
+  {
+    id: 'tendency_003',
+    type: 'tendency',
+    question: '朋友来找你聊烦心事时，你通常更习惯？',
+    options: [
+      { label: 'A', text: '直接回应，帮对方把状态带起来' },
+      { label: 'B', text: '先静静听，确认自己真的理解了再说' },
+      { label: 'C', text: '更看重安抚和陪伴，让对方先稳下来' },
+      { label: 'D', text: '会尝试帮对方拆解问题、找新角度' },
+    ],
+  },
+  {
+    id: 'tendency_004',
+    type: 'tendency',
+    question: '如果一周安排突然被打乱，你更可能怎么处理？',
+    options: [
+      { label: 'A', text: '先顶上去，把事情重新推动起来' },
+      { label: 'B', text: '先收一收节奏，重新判断最稳的做法' },
+      { label: 'C', text: '会先顾及大家感受，再考虑怎么调整' },
+      { label: 'D', text: '顺手把原计划升级成一个新方案' },
     ],
   },
 ]

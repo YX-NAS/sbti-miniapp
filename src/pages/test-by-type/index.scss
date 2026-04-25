@@ -84,6 +84,85 @@ $theme-color: var(--theme-color, #FF6B9D);
     color: #8c6e66;
     line-height: 1.5;
   }
+
+  .intro-note-text {
+    display: block;
+    margin-top: 8rpx;
+    font-size: 22rpx;
+    color: #a38f89;
+    line-height: 1.5;
+  }
+}
+
+.lock-card {
+  margin: 80rpx 32rpx 0;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 64rpx 40rpx 48rpx;
+  box-shadow: 0 8rpx 40rpx rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.lock-badge {
+  padding: 10rpx 24rpx;
+  border-radius: 999rpx;
+  margin-bottom: 28rpx;
+}
+
+.lock-badge-text {
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.lock-emoji {
+  font-size: 108rpx;
+  margin-bottom: 20rpx;
+}
+
+.lock-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #3a2a2a;
+  line-height: 1.5;
+  margin-bottom: 18rpx;
+}
+
+.lock-desc {
+  font-size: 28rpx;
+  color: #7f7068;
+  line-height: 1.8;
+  margin-bottom: 18rpx;
+}
+
+.lock-note {
+  font-size: 22rpx;
+  color: #a38f89;
+  margin-bottom: 32rpx;
+}
+
+.lock-share-btn {
+  width: 100%;
+  height: 92rpx;
+  line-height: 92rpx;
+  border-radius: 46rpx;
+  color: #fff !important;
+  font-size: 32rpx !important;
+  font-weight: 700 !important;
+  margin-bottom: 18rpx;
+  box-shadow: 0 10rpx 28rpx rgba(0,0,0,0.12);
+
+  &::after {
+    border: none !important;
+  }
+}
+
+.lock-back-btn {
+  font-size: 26rpx;
+  color: #7f7068;
+  padding: 12rpx 0;
 }
 
 // ======================== 问题卡片 ========================
@@ -254,7 +333,14 @@ $theme-color: var(--theme-color, #FF6B9D);
     color: #888;
     line-height: 1.8;
     text-align: center;
-    margin-bottom: 40rpx;
+    margin-bottom: 20rpx;
+  }
+
+  .result-note {
+    font-size: 22rpx;
+    color: #a38f89;
+    text-align: center;
+    margin-bottom: 32rpx;
   }
 
   .result-stats {
@@ -302,6 +388,66 @@ $theme-color: var(--theme-color, #FF6B9D);
       text-align: center;
       display: block;
     }
+  }
+
+  .upgrade-card {
+    width: 100%;
+    background: rgba(245, 247, 255, 0.92);
+    border-radius: 24rpx;
+    padding: 24rpx;
+    margin-bottom: 28rpx;
+  }
+
+  .upgrade-title {
+    display: block;
+    font-size: 28rpx;
+    font-weight: 700;
+    color: #44507d;
+    text-align: center;
+    margin-bottom: 10rpx;
+  }
+
+  .upgrade-desc {
+    display: block;
+    font-size: 24rpx;
+    line-height: 1.7;
+    color: #6b7495;
+    text-align: center;
+    margin-bottom: 18rpx;
+  }
+
+  .upgrade-status {
+    display: block;
+    font-size: 22rpx;
+    color: #7a86ad;
+    text-align: center;
+    margin-bottom: 16rpx;
+  }
+
+  .upgrade-btn,
+  .upgrade-share-btn {
+    height: 78rpx;
+    border-radius: 39rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .upgrade-share-btn {
+    width: 100%;
+    color: #fff !important;
+    font-size: 28rpx !important;
+    font-weight: 700 !important;
+
+    &::after {
+      border: none !important;
+    }
+  }
+
+  .upgrade-btn-text {
+    font-size: 28rpx;
+    font-weight: 700;
+    color: #fff;
   }
 
   .action-row {

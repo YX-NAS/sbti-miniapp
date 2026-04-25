@@ -69,6 +69,21 @@
   }
 }
 
+.notice-card {
+  margin: 0 24px 16px;
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.notice-text {
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: #6e5f7a;
+}
+
 // ==================== 星座选择器 ====================
 .sign-selector-section {
   background: rgba(255, 255, 255, 0.6);

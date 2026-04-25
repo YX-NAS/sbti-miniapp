@@ -11,11 +11,11 @@ export default function Home() {
     <View className="home-container">
       <View className="content">
         <View className="title-wrapper">
-          <Text className="main-title">SBTI</Text>
-          <Text className="sub-title">性格测试</Text>
+          <Text className="main-title">校园人格</Text>
+          <Text className="sub-title">类型测试</Text>
         </View>
         <Text className="description">
-          探索你的性格特质，发现真实的自己
+          看看你的校园画像与关系节奏
         </Text>
         <View className="test-info">
           <Text className="info-text">共31道题目</Text>

@@ -1,32 +1,22 @@
 import { View, Text } from '@tarojs/components'
-import Taro, { useShareAppMessage } from '@tarojs/taro'
-import { useState, useEffect } from 'react'
-import dailyQuestionsData from '../../data/daily_questions.json'
+import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
+import { useState } from 'react'
+import { formatDateKey, getDailyQuestionForDate, type DailyQuestion } from '../../utils/contentConfig'
 import './index.scss'
 
-type Question = {
-  id: string
-  type: string
-  typeEmoji: string
-  question: string
-  options: { label: string; text: string; scores: Record<string, number> }[]
-  result: { title: string; desc: string; emoji: string }
-}
-
-function getTodayQuestion(): Question {
-  const questions = (dailyQuestionsData as any).questions as Question[]
-  // 用日期做seed，每天题目固定
-  const now = new Date()
-  const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
-  const index = seed % questions.length
-  return questions[index]
-}
-
 export default function DailyTest() {
-  const [question] = useState<Question>(getTodayQuestion)
+  const [question, setQuestion] = useState<DailyQuestion>(getDailyQuestionForDate)
   const [selected, setSelected] = useState<string | null>(null)
   const [answered, setAnswered] = useState(false)
   const [result, setResult] = useState(question.result)
+
+  useDidShow(() => {
+    const nextQuestion = getDailyQuestionForDate()
+    setQuestion(nextQuestion)
+    setSelected(null)
+    setAnswered(false)
+    setResult(nextQuestion.result)
+  })
 
   useShareAppMessage(() => ({
     title: answered && result
@@ -54,6 +44,7 @@ export default function DailyTest() {
   // 日期格式化
   const today = new Date()
   const dateStr = `${today.getMonth() + 1}月${today.getDate()}日`
+  const dateKey = formatDateKey(today)
   const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
   const weekStr = weekDays[today.getDay()]
 
@@ -137,7 +128,7 @@ export default function DailyTest() {
               </View>
               <View className="result-tag">
                 <Text className="tag-icon">💡</Text>
-                <Text className="tag-text">每日一测</Text>
+                <Text className="tag-text">{dateKey}</Text>
               </View>
             </View>
 

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from '@tarojs/components'
-import Taro, { useShareAppMessage } from '@tarojs/taro'
+import Taro, { useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { useState } from 'react'
 import SignSelector from '../../../components/SignSelector/index'
 import ScoreCard from '../../../components/ScoreCard/index'
@@ -12,6 +12,7 @@ import {
   getLuckyInfo,
   PeriodType,
 } from '../../../utils/constellation_data'
+import { getConstellationPageConfig } from '../../../utils/contentConfig'
 import './index.scss'
 
 const PERIODS: { key: PeriodType; label: string }[] = [
@@ -22,12 +23,19 @@ const PERIODS: { key: PeriodType; label: string }[] = [
 ]
 
 export default function ConstellationHome() {
+  const [pageConfig, setPageConfig] = useState(() => getConstellationPageConfig())
   // 默认选中白羊座
   const [selectedSign, setSelectedSign] = useState<string>('aries')
-  const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>('today')
+  const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>(pageConfig.defaultPeriod)
   const [expanded, setExpanded] = useState(false)
   const [wished, setWished] = useState(false)
   const [wishCount, setWishCount] = useState(0)
+
+  useDidShow(() => {
+    const nextConfig = getConstellationPageConfig()
+    setPageConfig(nextConfig)
+    setSelectedPeriod(nextConfig.defaultPeriod)
+  })
 
   const signData = getConstellationById(selectedSign)
   const fortune = getFortune(selectedSign, selectedPeriod)
@@ -84,6 +92,12 @@ export default function ConstellationHome() {
           </View>
         </View>
       </View>
+
+      {pageConfig.noticeText && (
+        <View className="notice-card">
+          <Text className="notice-text">{pageConfig.noticeText}</Text>
+        </View>
+      )}
 
       {/* 星座选择器 */}
       <View className="sign-selector-section">

@@ -1,0 +1,6 @@
+{
+  "name": "syncRecords",
+  "version": "1.0.0",
+  "description": "同步用户测试记录到云数据库",
+  "main": "index.js"
+}
