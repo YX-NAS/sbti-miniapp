@@ -9,6 +9,7 @@ export default {
     'pages/admin-console/index',
     'pages/test-by-type/index',
     'pages/student-tendency/index',
+    'pages/study-full/index',
     'pages/catti-full/index',
     'pages/history/index',
     'pages/test/index',

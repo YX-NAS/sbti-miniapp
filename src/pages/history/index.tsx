@@ -23,25 +23,29 @@ type HistoryEntry = {
   completedAt: string
 }
 
-const TEST_COLORS: Record<string, string> = {
-  'campus-test': '#6C8D71',
-  'catti-full': '#9C7BFF',
-  'student-tendency': '#5B7CFA',
-  'char': '#FF6B9D',
-  'love': '#FF8C7A',
-  'fun': '#6BCB77',
+  const TEST_COLORS: Record<string, string> = {
+    'campus-test': '#6C8D71',
+    'catti-full': '#9C7BFF',
+    'student-tendency': '#5B7CFA',
+    'student-tendency-full': '#5B7CFA',
+    'study-full': '#4D96FF',
+    'char': '#FF6B9D',
+    'love': '#FF8C7A',
+    'fun': '#6BCB77',
   'study': '#4D96FF',
   'cat': '#9C7BFF',
   'tendency': '#5B7CFA',
 }
 
-const TEST_EMOJIS: Record<string, string> = {
-  'campus-test': '🧠',
-  'catti-full': '🐱',
-  'student-tendency': '🧭',
-  'char': '🧠',
-  'love': '💕',
-  'fun': '🎮',
+  const TEST_EMOJIS: Record<string, string> = {
+    'campus-test': '🧠',
+    'catti-full': '🐱',
+    'student-tendency': '🧭',
+    'student-tendency-full': '🧭',
+    'study-full': '📚',
+    'char': '🧠',
+    'love': '💕',
+    'fun': '🎮',
   'study': '📚',
   'cat': '🐱',
   'tendency': '🧭',
@@ -115,6 +119,8 @@ export default function HistoryPage() {
       'campus-test': '/pages/test/index',
       'catti-full': '/pages/catti-full/index',
       'student-tendency': '/pages/student-tendency/index',
+      'student-tendency-full': '/pages/student-tendency/index',
+      'study-full': '/pages/study-full/index',
     }
     const path = pathMap[entry.testId]
     if (path) {

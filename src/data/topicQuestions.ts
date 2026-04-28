@@ -57,6 +57,8 @@ export const TOPIC_TEST_CONFIG: Record<
     emoji: '📚',
     color: '#4D96FF',
     count: 4,
+    fullPath: '/pages/study-full/index?autoStart=1',
+    fullTitle: '学习状态完整版',
   },
   cat: {
     title: 'CatTi 猫系人格测试',

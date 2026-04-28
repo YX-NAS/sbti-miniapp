@@ -64,6 +64,20 @@ export type FulltestFunnelStats = {
 
 export function getFulltestFunnelStats(type: string): FulltestFunnelStats {
   const summary = getEventSummary()
+  const eventMap: Record<string, { completed?: string; shared?: string[] }> = {
+    cat: {
+      completed: 'catti_full_completed',
+      shared: ['catti_full_shared', 'catti_full_result_share'],
+    },
+    tendency: {
+      completed: 'student_tendency_full_completed',
+      shared: ['student_tendency_full_result_share'],
+    },
+    study: {
+      completed: 'study_full_completed',
+      shared: ['study_full_result_share'],
+    },
+  }
 
   const quickOpened = summary[`topic_test_opened`]
     ? (getEventLogs().filter(e => e.name === 'topic_test_opened' && e.payload?.type === type).length)
@@ -75,19 +89,13 @@ export function getFulltestFunnelStats(type: string): FulltestFunnelStats {
 
   const fulltestOpened = summary['topic_test_full_open_click']
     ? (getEventLogs().filter(e => e.name === 'topic_test_full_open_click' && e.payload?.type === type).length)
-    : (summary[`${type}_full_opened`]?.count ?? 0) + (summary['catti_full_opened']?.count ?? 0)
-
-  const fulltestCompleted = type === 'cat'
-    ? (summary['catti_full_completed']?.count ?? 0)
-    : type === 'tendency'
-    ? (summary['student_tendency_full_completed']?.count ?? 0)
     : 0
 
-  const fulltestShared = type === 'cat'
-    ? (summary['catti_full_shared']?.count ?? 0) + (summary['catti_full_result_share']?.count ?? 0)
-    : type === 'tendency'
-    ? (summary['student_tendency_full_result_share']?.count ?? 0)
-    : 0
+  const fulltestCompleted = eventMap[type]?.completed ? (summary[eventMap[type].completed!]?.count ?? 0) : 0
+
+  const fulltestShared = (eventMap[type]?.shared || []).reduce((total, eventName) => {
+    return total + (summary[eventName]?.count ?? 0)
+  }, 0)
 
   const pct = (a: number, b: number) => b === 0 ? '-' : `${Math.round((a / b) * 100)}%`
 
@@ -105,5 +113,5 @@ export function getFulltestFunnelStats(type: string): FulltestFunnelStats {
 }
 
 export function getAllFulltestFunnelStats(): FulltestFunnelStats[] {
-  return ['cat', 'tendency'].map(getFulltestFunnelStats)
+  return ['cat', 'tendency', 'study'].map(getFulltestFunnelStats)
 }

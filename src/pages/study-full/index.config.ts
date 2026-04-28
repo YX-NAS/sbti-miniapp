@@ -1,0 +1,5 @@
+export default {
+  navigationBarTitleText: '学习状态完整版',
+  navigationBarBackgroundColor: '#f6faf6',
+  navigationBarTextStyle: 'black',
+}

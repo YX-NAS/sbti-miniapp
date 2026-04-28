@@ -299,7 +299,9 @@ export default function AdminConsole() {
         <Text className="section-title">完整版转化漏斗</Text>
         {funnelStats.map(s => (
           <View key={s.type} className="funnel-card">
-            <Text className="funnel-type">{s.type === 'cat' ? '🐱 CatTi' : '🧭 学生倾向'}</Text>
+            <Text className="funnel-type">
+              {s.type === 'cat' ? '🐱 CatTi' : s.type === 'tendency' ? '🧭 学生倾向' : '📚 学习状态'}
+            </Text>
             <View className="funnel-row">
               <View className="funnel-col">
                 <Text className="funnel-num">{s.quickOpened}</Text>
