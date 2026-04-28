@@ -300,7 +300,15 @@ export default function AdminConsole() {
         {funnelStats.map(s => (
           <View key={s.type} className="funnel-card">
             <Text className="funnel-type">
-              {s.type === 'cat' ? '🐱 CatTi' : s.type === 'tendency' ? '🧭 学生倾向' : '📚 学习状态'}
+              {s.type === 'char'
+                ? '🧠 学生性格'
+                : s.type === 'love'
+                ? '💕 情感模式'
+                : s.type === 'cat'
+                ? '🐱 CatTi'
+                : s.type === 'tendency'
+                ? '🧭 学生倾向'
+                : '📚 学习状态'}
             </Text>
             <View className="funnel-row">
               <View className="funnel-col">

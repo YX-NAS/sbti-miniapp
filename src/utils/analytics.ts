@@ -65,6 +65,14 @@ export type FulltestFunnelStats = {
 export function getFulltestFunnelStats(type: string): FulltestFunnelStats {
   const summary = getEventSummary()
   const eventMap: Record<string, { completed?: string; shared?: string[] }> = {
+    char: {
+      completed: 'char_full_completed',
+      shared: ['char_full_result_share'],
+    },
+    love: {
+      completed: 'love_full_completed',
+      shared: ['love_full_result_share'],
+    },
     cat: {
       completed: 'catti_full_completed',
       shared: ['catti_full_shared', 'catti_full_result_share'],
@@ -113,5 +121,5 @@ export function getFulltestFunnelStats(type: string): FulltestFunnelStats {
 }
 
 export function getAllFulltestFunnelStats(): FulltestFunnelStats[] {
-  return ['cat', 'tendency', 'study'].map(getFulltestFunnelStats)
+  return ['char', 'love', 'cat', 'tendency', 'study'].map(getFulltestFunnelStats)
 }

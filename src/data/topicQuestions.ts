@@ -36,6 +36,8 @@ export const TOPIC_TEST_CONFIG: Record<
     emoji: '🧠',
     color: '#FF6B9D',
     count: 4,
+    fullPath: '/pages/char-full/index?autoStart=1',
+    fullTitle: '学生性格完整版',
   },
   love: {
     title: '情感模式测试',
@@ -43,6 +45,8 @@ export const TOPIC_TEST_CONFIG: Record<
     emoji: '💕',
     color: '#FF8C7A',
     count: 4,
+    fullPath: '/pages/love-full/index?autoStart=1',
+    fullTitle: '情感模式完整版',
   },
   fun: {
     title: '趣味社交测试',
