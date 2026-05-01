@@ -310,6 +310,25 @@ export default function TestByType() {
             </View>
           )}
 
+          <View className="companion-card-strip">
+            <View className="companion-card-strip-header">
+              <Text className="companion-card-strip-emoji">🎯</Text>
+              <View className="companion-card-strip-copy">
+                <Text className="companion-card-strip-title">陪练讲解</Text>
+                <Text className="companion-card-strip-desc">AI 教练根据你的测试结果，帮你实战演练沟通技巧</Text>
+              </View>
+            </View>
+            <Button
+              className="companion-card-strip-btn"
+              onClick={() => {
+                trackEvent('companion_entry_click', { source: 'test-by-type', type })
+                Taro.showToast({ title: '陪练功能即将上线', icon: 'none', duration: 2000 })
+              }}
+            >
+              开始陪练
+            </Button>
+          </View>
+
           <View className="recommend-strip">
             <Text className="recommend-strip-title">猜你喜欢</Text>
             {recommendCards.map(item => (
