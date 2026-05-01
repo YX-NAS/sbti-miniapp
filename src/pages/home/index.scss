@@ -1,0 +1,130 @@
+// SBTI 首页 - 多巴胺配色 + 可爱风
+// 配色：粉#FF6B9D / 黄#FFD93D / 蓝#4D96FF / 绿#6BCB77
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 120px 48px 80px;
+  box-sizing: border-box;
+  background: linear-gradient(160deg, #FFE5EC 0%, #FFF0D6 50%, #E5F3FF 100%);
+  position: relative;
+  overflow: hidden;
+
+  // 装饰圆形
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    background: #FFD93D;
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 120px;
+    left: -40px;
+    width: 160px;
+    height: 160px;
+    background: #6BCB77;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+
+    .title-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 56px;
+
+      .main-title {
+        font-size: 96px;
+        font-weight: 800;
+        color: #FF6B9D;
+        letter-spacing: 6px;
+        text-shadow: 0 6px 24px rgba(255, 107, 157, 0.3);
+        line-height: 1;
+      }
+
+      .sub-title {
+        font-size: 44px;
+        color: #4D96FF;
+        margin-top: 12px;
+        letter-spacing: 14px;
+        font-weight: 600;
+      }
+    }
+
+    .description {
+      font-size: 38rpx;
+      color: #5a4a4a;
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 56px;
+      padding: 0 16px;
+    }
+
+    .test-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+
+      .info-text {
+        font-size: 30rpx;
+        color: #7a5a6a;
+        padding: 14px 40px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50px;
+        border: 2px solid rgba(255, 107, 157, 0.2);
+        backdrop-filter: blur(8px);
+      }
+    }
+  }
+
+  .footer {
+    width: 100%;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+
+    .start-btn {
+      width: 100%;
+      height: 108px;
+      line-height: 108px;
+      background: linear-gradient(135deg, #FF6B9D 0%, #FF8E8E 100%);
+      color: #ffffff;
+      font-size: 40rpx;
+      font-weight: 700;
+      border-radius: 54px;
+      border: none;
+      box-shadow: 0 12px 36px rgba(255, 107, 157, 0.4);
+      letter-spacing: 4px;
+
+      &::after {
+        border: none;
+      }
+
+      &:active {
+        transform: scale(0.97);
+        box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
+      }
+    }
+  }
+}

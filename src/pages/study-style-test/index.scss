@@ -1,0 +1,403 @@
+// 学习风格测试页
+
+.test-container {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #F5F0FF 0%, #EEE8FF 50%, #F0F4FF 100%);
+  padding-top: calc(88rpx + env(safe-area-inset-top));
+  padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
+}
+
+// ==================== 顶部进度 ====================
+.test-header {
+  display: flex;
+  align-items: center;
+  padding: calc(48rpx + env(safe-area-inset-top)) 32rpx 24rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: linear-gradient(160deg, #F5F0FF 0%, #EEE8FF 50%, #F0F4FF 100%);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+
+  .back-btn {
+    width: 72rpx;
+    height: 72rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    font-size: 36rpx;
+    color: #666;
+  }
+
+  .header-info {
+    display: flex;
+    align-items: center;
+    gap: 12rpx;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .header-type {
+      font-size: 26rpx;
+      color: #7A5A9A;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .header-progress {
+      font-size: 28rpx;
+      color: #9B59B6;
+      font-weight: 700;
+    }
+  }
+
+  .progress-track {
+    height: 8rpx;
+    background: rgba(155, 89, 182, 0.15);
+    border-radius: 4px;
+    overflow: hidden;
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #9B59B6 0%, #8E44AD 100%);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+// ==================== 问题卡片 ====================
+.question-card {
+  margin: 0 32px 24px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: 0 8px 24px rgba(155, 89, 182, 0.08);
+
+  .question-text {
+    display: block;
+    font-size: 36rpx;
+    font-weight: 700;
+    color: #3A2A5A;
+    line-height: 1.7;
+    letter-spacing: 1px;
+  }
+}
+
+// ==================== 选项 ====================
+.options-area {
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.option-item {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &.selected {
+    background: rgba(155, 89, 182, 0.08);
+    border-color: rgba(155, 89, 182, 0.4);
+
+    .option-label {
+      background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
+      color: #fff;
+    }
+  }
+
+  .option-label {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28rpx;
+    font-weight: 800;
+    color: #7A5A9A;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .option-text {
+    flex: 1;
+    font-size: 30rpx;
+    color: #4A3A6A;
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  .check-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
+    color: #fff;
+    font-size: 22rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+}
+
+// ==================== 导航按钮 ====================
+.nav-btns {
+  padding: 0 32px;
+  display: flex;
+  gap: 16px;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 88px;
+  border-radius: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+
+  &.prev-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(155, 89, 182, 0.2);
+
+    &.disabled { opacity: 0.3; }
+
+    .nav-btn-text {
+      color: #9B59B6;
+    }
+  }
+
+  &.next-btn {
+    background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3);
+
+    &.disabled {
+      background: rgba(0, 0, 0, 0.06);
+      box-shadow: none;
+
+      .nav-btn-text { color: #B0A0C0; }
+    }
+
+    .nav-btn-text {
+      font-size: 30rpx;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+// ==================== 结果页 ====================
+.result-top {
+  text-align: center;
+  padding: 60px 32px 32px;
+  position: relative;
+
+  .result-top-decor {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 300px;
+    background: linear-gradient(180deg, rgba(155, 89, 182, 0.12) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .result-badge {
+    display: block;
+    font-size: 80px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .result-main-title {
+    display: block;
+    font-size: 48rpx;
+    font-weight: 800;
+    color: #3A2A5A;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .result-main-desc {
+    display: block;
+    font-size: 28rpx;
+    color: #6A5A7A;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.radar-section, .methods-section, .tips-section {
+  padding: 0 32px;
+  margin-bottom: 28px;
+}
+
+.section-title {
+  margin-bottom: 16px;
+
+  .section-title-text {
+    font-size: 30rpx;
+    font-weight: 700;
+    color: #3A2A5A;
+    letter-spacing: 1px;
+  }
+}
+
+.radar-chart {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  &:last-child { margin-bottom: 0; }
+
+  .bar-label {
+    width: 120px;
+    font-size: 26rpx;
+    color: #5A4A6A;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 16px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    overflow: hidden;
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width 0.8s ease;
+    }
+  }
+
+  .bar-pct {
+    width: 60px;
+    font-size: 24rpx;
+    color: #7A5A9A;
+    font-weight: 700;
+    text-align: right;
+    flex-shrink: 0;
+  }
+}
+
+.methods-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.method-tag {
+  background: rgba(155, 89, 182, 0.1);
+  border-radius: 50px;
+  padding: 10px 20px;
+
+  .method-text {
+    font-size: 26rpx;
+    color: #7A3A9A;
+    font-weight: 600;
+  }
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tip-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  padding: 16px 20px;
+
+  .tip-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
+    color: #fff;
+    font-size: 24rpx;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .tip-text {
+    flex: 1;
+    font-size: 26rpx;
+    color: #5A4A6A;
+    line-height: 1.7;
+  }
+}
+
+.result-actions {
+  padding: 0 32px;
+  display: flex;
+  gap: 16px;
+
+  .share-btn {
+    flex: 1;
+    height: 84px !important;
+    line-height: 84px !important;
+    background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%) !important;
+    color: #fff !important;
+    font-size: 30rpx !important;
+    font-weight: 700 !important;
+    border-radius: 42px !important;
+    border: none !important;
+    letter-spacing: 2px;
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3) !important;
+
+    &::after { border: none !important; }
+  }
+
+  .retest-btn {
+    flex: 1;
+    height: 84px !important;
+    line-height: 84px !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #9B59B6 !important;
+    font-size: 30rpx !important;
+    font-weight: 700 !important;
+    border-radius: 42px !important;
+    border: 2px solid rgba(155, 89, 182, 0.3) !important;
+    letter-spacing: 2px;
+
+    &::after { border: none !important; }
+  }
+}
+
+.bottom-spacer {
+  height: 60px;
+}

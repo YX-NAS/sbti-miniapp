@@ -1,0 +1,5 @@
+export default {
+  navigationBarTitleText: '学生性格完整版',
+  navigationBarBackgroundColor: '#f6faf6',
+  navigationBarTextStyle: 'black',
+}

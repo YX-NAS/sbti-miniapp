@@ -1,0 +1,34 @@
+.radar-chart {
+  width: 100%;
+}
+
+.dim-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.dim-pill {
+  border: 1px solid #dbe8dd;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  text-align: center;
+}
+
+.dim-pill-label {
+  color: #6a786f;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.dim-pill-value {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.dim-pill-score {
+  color: #6a786f;
+  font-size: 11px;
+  margin-top: 2px;
+}

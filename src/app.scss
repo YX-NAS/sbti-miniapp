@@ -1,0 +1,33 @@
+// 全局样式 - 多巴胺配色主题
+// 配色：粉#FF6B9D / 黄#FFD93D / 蓝#4D96FF / 绿#6BCB77
+
+page {
+  background: linear-gradient(180deg, #FFF5F8 0%, #F0F8FF 100%);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 32rpx;
+  color: #3a3a3a;
+}
+
+// 全局圆角卡片
+.card-base {
+  background: #ffffff;
+  border: 2px solid rgba(255, 107, 157, 0.12);
+  border-radius: 32px;
+  box-shadow: 0 8px 24px rgba(255, 107, 157, 0.06);
+}
+
+// 通用渐变按钮
+.btn-gradient {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FF8E8E 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 48px;
+  box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
+}
+
+// 主色调文字
+.text-primary { color: #FF6B9D; }
+.text-secondary { color: #4D96FF; }
+.text-accent { color: #6BCB77; }
+.text-warning { color: #FFD93D; }

@@ -1,0 +1,45 @@
+.sign-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 24px;
+
+  .sign-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 96px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &.selected {
+      background: rgba(255, 107, 157, 0.1);
+      border-color: #FF6B9D;
+      box-shadow: 0 4px 16px rgba(255, 107, 157, 0.2);
+    }
+
+    .sign-emoji {
+      font-size: 36px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .sign-name {
+      font-size: 22rpx;
+      color: #5A4A4A;
+      letter-spacing: 1px;
+    }
+
+    &.selected .sign-name {
+      color: #FF6B9D;
+      font-weight: 600;
+    }
+  }
+}
