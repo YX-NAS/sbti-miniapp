@@ -79,6 +79,8 @@ export const TOPIC_TEST_CONFIG: Record<
     emoji: '🌊',
     color: '#1AA7EC',
     count: 4,
+    fullPath: '/pages/ocean-full/index?autoStart=1',
+    fullTitle: '海洋生物Ti完整版',
   },
   tendency: {
     title: '学生人格倾向快测',

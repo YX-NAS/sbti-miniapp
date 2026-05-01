@@ -12,6 +12,7 @@ export default {
     'pages/char-full/index',
     'pages/love-full/index',
     'pages/study-full/index',
+    'pages/ocean-full/index',
     'pages/catti-full/index',
     'pages/history/index',
     'pages/test/index',
