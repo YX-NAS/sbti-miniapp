@@ -11,6 +11,7 @@ import {
 } from '../../data/topicQuestions'
 import { trackEvent } from '../../utils/analytics'
 import { getRecommendations } from '../../utils/recommendations'
+import { companionSessionManager } from '../../utils/companionSession'
 import './index.scss'
 
 type AnswerMap = Record<string, TopicResultKey>
@@ -44,6 +45,24 @@ export default function TestByType() {
   const total = questions.length
   const progress = total > 0 ? ((currentIndex + 1) / total) * 100 : 0
   const recommendCards = getRecommendations(type)
+
+  const handleEnterCompanion = async () => {
+    trackEvent('companion_entry_click', { source: 'test-by-type', type })
+    Taro.showLoading({ title: '召唤陪练中...', mask: true })
+    try {
+      const h5Url = await companionSessionManager.createSession({
+        roleHint: 'spark',
+        sceneHint: 'ice-break',
+        goal: '根据测试结果提升沟通表达',
+        nickname: '同学',
+      })
+      Taro.hideLoading()
+      Taro.navigateTo({ url: `/pages/companion/index?url=${encodeURIComponent(h5Url)}` })
+    } catch (e) {
+      Taro.hideLoading()
+      Taro.showToast({ title: '网络异常，请稍后重试', icon: 'none', duration: 2000 })
+    }
+  }
 
   const syncUnlockState = () => {
     const unlocked = !isCatTi || Boolean(Taro.getStorageSync(CATTI_UNLOCK_KEY))
@@ -320,10 +339,7 @@ export default function TestByType() {
             </View>
             <Button
               className="companion-card-strip-btn"
-              onClick={() => {
-                trackEvent('companion_entry_click', { source: 'test-by-type', type })
-                Taro.showToast({ title: '陪练功能即将上线', icon: 'none', duration: 2000 })
-              }}
+              onClick={handleEnterCompanion}
             >
               开始陪练
             </Button>
