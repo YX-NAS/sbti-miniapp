@@ -10,6 +10,7 @@ import { dimensionOrder, dimensionMeta } from '../../utils/campusData'
 import { dailyReportCheck, getOrCreateDeviceId } from '../../utils/tencentCloud'
 import { trackEvent } from '../../utils/analytics'
 import { getRecommendations } from '../../utils/recommendations'
+import { companionSessionManager, type CompanionParams } from '../../utils/companionSession'
 import SharePoster from '../../components/SharePoster/index'
 import './index.scss'
 
@@ -72,6 +73,82 @@ export default function Result() {
   const handleExplore = (path: string, entryId: string) => {
     trackEvent('sbti_result_next_click', { type: result?.finalType.code || '', entryId })
     Taro.navigateTo({ url: path })
+  }
+
+  const handleEnterCompanion = async () => {
+    if (!result) return
+
+    console.log('[Result] Entering companion mode')
+    
+    Taro.showLoading({
+      title: '召唤陪练中...',
+      mask: true,
+    })
+
+    try {
+      // 从 SBTI 结果映射到陪聊参数
+      const companionParams: CompanionParams = {
+        roleHint: mapSbtiToRole(result.finalType.code),
+        sceneHint: 'ice-break',
+        goal: '提升沟通表达效果',
+        nickname: '同学',
+      }
+
+      // 调用陪聊管理器创建会话
+      const h5Url = await companionSessionManager.createSession(companionParams)
+
+      trackEvent('companion_session_created', {
+        sbtiType: result.finalType.code,
+      })
+
+      // 导航到陪聊页面
+      Taro.navigateTo({
+        url: `/pages/companion/index?url=${encodeURIComponent(h5Url)}`,
+        fail: (err) => {
+          console.error('[Result] Navigate failed:', err)
+          Taro.showToast({
+            title: '打开陪聊页面失败',
+            icon: 'none',
+            duration: 2000,
+          })
+        },
+      })
+
+    } catch (error) {
+      console.error('[Result] Companion error:', error)
+      Taro.showToast({
+        title: error instanceof Error ? error.message : '陪练召唤失败',
+        icon: 'none',
+        duration: 2000,
+      })
+    } finally {
+      Taro.hideLoading()
+    }
+  }
+
+  /**
+   * 将 SBTI 类型映射到陪聊角色
+   */
+  const mapSbtiToRole = (sbtiType: string): string => {
+    const roleMap: Record<string, string> = {
+      'ISFJ': 'warm',     // 守护者 → 温暖陪练
+      'ISFP': 'warm',     // 探险家 → 温暖陪练
+      'INFJ': 'steady',   // 倡导者 → 稳健陪练
+      'INFP': 'steady',   // 调解者 → 稳健陪练
+      'ISTJ': 'direct',   // 后勤官 → 直接陪练
+      'ISTP': 'direct',   // 鉴赏家 → 直接陪练
+      'INTJ': 'direct',   // 指挥官 → 直接陪练
+      'INTP': 'spark',    // 逻辑家 → 活跃陪练
+      'ESFJ': 'warm',     // 执政官 → 温暖陪练
+      'ESFP': 'spark',    // 表演者 → 活跃陪练
+      'ENFJ': 'steady',   // 主人公 → 稳健陪练
+      'ENFP': 'spark',    // 竞选者 → 活跃陪练
+      'ESTJ': 'direct',   // 总经理 → 直接陪练
+      'ESTP': 'spark',    // 企业家 → 活跃陪练
+      'ENTJ': 'direct',   // 总司令 → 直接陪练
+      'ENTP': 'spark',    // 辩手 → 活跃陪练
+    }
+    return roleMap[sbtiType] || 'warm'
   }
 
   if (!result) {
@@ -194,6 +271,20 @@ export default function Result() {
               <Text className="growth-action-desc">每天一道，适合顺手分享</Text>
             </View>
           </View>
+        </View>
+
+        {/* AI 陪聊卡片 */}
+        <View className="card companion-card">
+          <View className="companion-header">
+            <Text className="companion-emoji">🎯</Text>
+            <View className="companion-copy">
+              <Text className="companion-title">陪练讲解</Text>
+              <Text className="companion-desc">AI 教练根据你的测试结果，帮你实战演练沟通技巧</Text>
+            </View>
+          </View>
+          <Button className="companion-btn" onClick={handleEnterCompanion}>
+            开始陪练
+          </Button>
         </View>
 
         <View className="card recommend-card">

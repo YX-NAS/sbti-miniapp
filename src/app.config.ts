@@ -16,6 +16,7 @@ export default {
     'pages/history/index',
     'pages/test/index',
     'pages/result/index',
+    'pages/companion/index',
   ],
   window: {
     navigationBarTitleText: '星座人格实验室',
