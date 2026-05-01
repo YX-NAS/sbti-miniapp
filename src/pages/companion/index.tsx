@@ -3,6 +3,18 @@ import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import './index.scss'
 
+// Extend JSX to include web-view component (WeChat mini-program native component)
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'web-view': {
+        src: string
+        [key: string]: any
+      }
+    }
+  }
+}
+
 export default function CompanionPage() {
   const [url, setUrl] = useState('')
 
