@@ -8,7 +8,9 @@
     "dev:h5": "taro build --type h5 --watch",
     "build:weapp": "taro build --type weapp",
     "build:h5": "taro build --type h5",
-    "preview:weapp": "taro build --type weapp && minidev preview"
+    "preview:weapp": "taro build --type weapp && minidev preview",
+    "dev:companion-backend": "npm --prefix ./companion-backend run dev",
+    "start:companion-backend": "npm --prefix ./companion-backend run start"
   },
   "dependencies": {
     "@tarojs/components": "^4.0.0",
